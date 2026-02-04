@@ -1,141 +1,156 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Ultimate Valentine Surprise</title>
+<title>Beyond Valentine</title>
 <style>
 body{
   margin:0;
   height:100vh;
-  background:#111;
+  overflow:hidden;
+  font-family:Arial;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family:Arial;
-  overflow:hidden;
-  transition:background 1.5s ease;
+  background:radial-gradient(circle at center,#1a1a2e,#000);
+  color:white;
+}
+
+/* Star field */
+canvas{
+  position:absolute;
+  top:0;
+  left:0;
 }
 
 /* Button */
 button{
-  padding:20px 40px;
-  font-size:28px;
+  padding:22px 50px;
+  font-size:30px;
   border:none;
-  border-radius:12px;
-  background:red;
+  border-radius:15px;
+  background:#ff004f;
   color:white;
   cursor:pointer;
-  box-shadow:0 0 25px red;
+  box-shadow:0 0 30px #ff004f;
   animation:pulse 1.2s infinite;
   z-index:2;
-  position:relative;
 }
 
 @keyframes pulse{
   0%{transform:scale(1)}
-  50%{transform:scale(1.1)}
+  50%{transform:scale(1.15)}
   100%{transform:scale(1)}
-}
-
-/* Hearts */
-.heart{
-  position:absolute;
-  font-size:20px;
-  animation:float 4s linear forwards;
-  pointer-events:none;
-}
-
-@keyframes float{
-  0%{opacity:1; transform:translateY(0) scale(1)}
-  100%{opacity:0; transform:translateY(-400px) scale(2)}
-}
-
-/* Sparkles */
-.sparkle{
-  position:absolute;
-  width:5px;
-  height:5px;
-  background:white;
-  border-radius:50%;
-  animation:twinkle 2s infinite alternate;
-}
-
-@keyframes twinkle{
-  from{opacity:0.2}
-  to{opacity:1}
 }
 
 /* Message */
 .message{
   position:absolute;
   text-align:center;
-  color:white;
-  font-size:50px;
+  font-size:48px;
   opacity:0;
-  transform:scale(0.5);
-  transition:all 1.5s ease;
-  z-index:2;
-  text-shadow:0 0 20px white;
+  top:40%;
+  transition:opacity 2s ease;
+  text-shadow:0 0 20px #ff4d6d,0 0 40px #ff4d6d;
 }
 
-.message.show{
-  opacity:1;
-  transform:scale(1);
+.show{opacity:1}
+
+/* Floating hearts */
+.heart{
+  position:absolute;
+  font-size:25px;
+  animation:rise 5s linear forwards;
+  pointer-events:none;
+}
+
+@keyframes rise{
+  0%{transform:translateY(0) scale(1); opacity:1}
+  100%{transform:translateY(-600px) scale(2); opacity:0}
 }
 
 /* Puppy */
 .puppy{
   position:absolute;
-  bottom:20px;
-  width:200px;
+  bottom:0;
+  width:220px;
   opacity:0;
   transition:opacity 2s ease;
 }
+.puppy.show{opacity:1}
 
-.puppy.show{
-  opacity:1;
+/* Typewriter */
+.typewriter{
+  border-right:3px solid white;
+  white-space:nowrap;
+  overflow:hidden;
+  width:0;
+  animation:typing 4s steps(40,end) forwards, blink .7s infinite;
 }
+@keyframes typing{to{width:100%}}
+@keyframes blink{50%{border-color:transparent}}
 </style>
 </head>
 <body>
 
-<button onclick="startLove()">Click It ❤️</button>
+<canvas id="stars"></canvas>
+
+<button onclick="startLove()">Enter My Universe ❤️</button>
 
 <div class="message" id="msg">
-  💖 Happie Valentine's Day 💖<br>
-  You make my world beautiful 🌎✨
+  <div class="typewriter">
+    Happie Valentine's Day 💖 You are my universe ✨
+  </div>
 </div>
 
 <img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d" class="puppy" id="dog">
 
-<!-- Romantic Song (hidden YouTube player) -->
-<iframe id="music" width="0" height="0"
+<!-- Romantic Music -->
+<iframe width="0" height="0"
 src="https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&loop=1&playlist=2Vv-BfVoq4g"
-frameborder="0" allow="autoplay"></iframe>
+allow="autoplay"></iframe>
 
 <script>
+// ⭐ STAR BACKGROUND
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+let stars=[];
+for(let i=0;i<200;i++){
+  stars.push({x:Math.random()*canvas.width,
+              y:Math.random()*canvas.height,
+              r:Math.random()*2});
+}
+
+function drawStars(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle="white";
+  stars.forEach(s=>{
+    ctx.beginPath();
+    ctx.arc(s.x,s.y,s.r,0,2*Math.PI);
+    ctx.fill();
+    s.y+=0.3;
+    if(s.y>canvas.height) s.y=0;
+  });
+  requestAnimationFrame(drawStars);
+}
+drawStars();
+
+// 💖 MAIN EXPERIENCE
 function startLove(){
   document.querySelector("button").style.display="none";
-  document.body.style.background="linear-gradient(135deg, #ff4e8d, #ff99cc)";
-
-  // Hearts
-  for(let i=0;i<50;i++){
-    let heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="❤️";
-    heart.style.left=Math.random()*100+"vw";
-    heart.style.top="80vh";
-    heart.style.fontSize=(Math.random()*20+20)+"px";
-    heart.style.animationDuration=(Math.random()*2+2)+"s";
-    document.body.appendChild(heart);
-  }
-
-  // Sparkles
-  for(let i=0;i<80;i++){
-    let s=document.createElement("div");
-    s.className="sparkle";
-    s.style.left=Math.random()*100+"vw";
-    s.style.top=Math.random()*100+"vh";
-    document.body.appendChild(s);
+  document.body.style.background="radial-gradient(circle,#ff4d6d,#000)";
+  
+  // Floating hearts
+  for(let i=0;i<60;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"vw";
+    h.style.bottom="0";
+    h.style.fontSize=(Math.random()*20+20)+"px";
+    document.body.appendChild(h);
   }
 
   setTimeout(()=>{
