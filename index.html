@@ -1,134 +1,129 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>For Someone Special</title>
+<title>Under the Sakura Sky</title>
 <style>
 body{
   margin:0;
   height:100vh;
-  background:linear-gradient(120deg,#0f0c29,#302b63,#24243e);
+  overflow:hidden;
+  font-family:'Segoe UI',sans-serif;
   display:flex;
   justify-content:center;
   align-items:center;
-  font-family:'Segoe UI',sans-serif;
-  overflow:hidden;
-  color:white;
+  background:linear-gradient(#ffd6e8,#ffc2e2,#ffb3d9);
+  color:#fff;
 }
 
-/* Floating soft background glow */
+/* Soft moving clouds effect */
 body::before{
   content:"";
   position:absolute;
-  width:600px;
-  height:600px;
-  background:radial-gradient(circle,#ff4d6d55,transparent);
-  animation:float 8s ease-in-out infinite alternate;
+  width:200%;
+  height:200%;
+  background:radial-gradient(circle at 30% 30%,#ffffff55,transparent 40%);
+  animation:clouds 20s linear infinite;
 }
-@keyframes float{
-  from{transform:translate(-100px,-100px);}
-  to{transform:translate(100px,100px);}
+@keyframes clouds{
+  from{transform:translateX(0);}
+  to{transform:translateX(-25%);}
 }
 
-/* Glass Card */
+/* Message card */
 .card{
-  width:420px;
-  padding:40px;
   text-align:center;
-  backdrop-filter:blur(15px);
-  background:rgba(255,255,255,0.08);
+  background:rgba(255,255,255,0.15);
+  padding:40px;
   border-radius:20px;
-  box-shadow:0 0 40px rgba(255,77,109,0.3);
-  transform:scale(0.9);
-  opacity:0;
-  transition:all 1.2s ease;
+  backdrop-filter:blur(10px);
+  box-shadow:0 0 30px #ff99cc66;
+  z-index:2;
+  animation:fadeIn 2s ease;
 }
 
-.card.show{
-  transform:scale(1);
-  opacity:1;
+@keyframes fadeIn{
+  from{opacity:0; transform:translateY(20px);}
+  to{opacity:1; transform:translateY(0);}
 }
 
-/* Button */
 button{
-  padding:18px 40px;
-  font-size:22px;
+  margin-top:20px;
+  padding:15px 35px;
   border:none;
   border-radius:12px;
-  background:#ff4d6d;
+  background:#ff6fa5;
   color:white;
+  font-size:20px;
   cursor:pointer;
-  box-shadow:0 0 25px #ff4d6d;
-  transition:all .4s ease;
+  box-shadow:0 0 20px #ff6fa5;
   user-select:none;
 }
+
 button:hover{
   transform:scale(1.1);
-  box-shadow:0 0 40px #ff4d6d;
 }
 
-/* Message stages */
-.stage{
+.message{
+  margin-top:20px;
+  font-size:24px;
   opacity:0;
-  transform:translateY(20px);
-  transition:all 1s ease;
-}
-.stage.show{
-  opacity:1;
-  transform:translateY(0);
+  transition:opacity 2s ease;
 }
 
-/* Floating hearts background */
-.heart{
+.show{opacity:1}
+
+/* Sakura petals */
+.petal{
   position:absolute;
+  top:-20px;
+  color:#ff9ecb;
   font-size:18px;
-  animation:rise 6s linear forwards;
-  pointer-events:none;
-}
-@keyframes rise{
-  0%{transform:translateY(0);opacity:1}
-  100%{transform:translateY(-800px);opacity:0}
+  animation:fall linear forwards;
 }
 
-/* Final glow */
-.final{
-  text-shadow:0 0 15px #ff4d6d,0 0 30px #ff4d6d;
-  font-size:28px;
+@keyframes fall{
+  to{
+    transform:translateY(110vh) rotate(360deg);
+    opacity:0;
+  }
+}
+
+/* Tree silhouette */
+.tree{
+  position:absolute;
+  bottom:0;
+  width:300px;
+  left:50%;
+  transform:translateX(-50%);
+  opacity:0.8;
 }
 </style>
 </head>
 <body>
 
-<div class="card" id="card">
-  <h2>Hey You ❤️</h2>
-  <p class="stage" id="s1">I made this just for you...</p>
-  <p class="stage" id="s2">Because you make ordinary days magical ✨</p>
-  <p class="stage final" id="s3">Happie Valentine's Day 💖</p>
-  <button onclick="start()">Open Your Surprise</button>
+<img src="https://i.imgur.com/8QfQ2YF.png" class="tree">
+
+<div class="card">
+  <h2>Hey You 🌸</h2>
+  <p>Under this pink sky, I have something to say...</p>
+  <button onclick="start()">See My Heart</button>
+  <div class="message" id="msg">Happie Valentine's Day 💖 You make my world bloom 🌷</div>
 </div>
 
 <script>
-window.onload=()=>document.getElementById("card").classList.add("show");
-
 function start(){
-  document.querySelector("button").style.display="none";
-  floatHearts();
-
-  setTimeout(()=>document.getElementById("s1").classList.add("show"),800);
-  setTimeout(()=>document.getElementById("s2").classList.add("show"),2200);
-  setTimeout(()=>document.getElementById("s3").classList.add("show"),3800);
+  document.getElementById("msg").classList.add("show");
+  setInterval(createPetal,200);
 }
 
-function floatHearts(){
-  setInterval(()=>{
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="💖";
-    h.style.left=Math.random()*100+"vw";
-    h.style.bottom="0";
-    h.style.fontSize=(Math.random()*20+14)+"px";
-    document.body.appendChild(h);
-    setTimeout(()=>h.remove(),6000);
-  },300);
+function createPetal(){
+  let petal=document.createElement("div");
+  petal.className="petal";
+  petal.innerHTML="🌸";
+  petal.style.left=Math.random()*100+"vw";
+  petal.style.animationDuration=(Math.random()*3+4)+"s";
+  document.body.appendChild(petal);
+  setTimeout(()=>petal.remove(),7000);
 }
 </script>
 
