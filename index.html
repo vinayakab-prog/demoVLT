@@ -1,139 +1,107 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Under the Sakura Sky</title>
+<title>For You</title>
 <style>
 body{
   margin:0;
   height:100vh;
   overflow:hidden;
   font-family:'Segoe UI',sans-serif;
+  background:linear-gradient(to top,#a1c4fd,#c2e9fb);
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(#ffd6e8,#ffc2e2,#ffb3d9);
-  color:#fff;
+  color:white;
 }
 
-/* Soft sky glow */
+/* Sun glow */
 body::before{
   content:"";
   position:absolute;
-  width:200%;
-  height:200%;
-  background:radial-gradient(circle at 40% 30%,#ffffff55,transparent 40%);
-  animation:clouds 20s linear infinite;
-}
-@keyframes clouds{
-  from{transform:translateX(0);}
-  to{transform:translateX(-25%);}
+  width:400px;
+  height:400px;
+  background:radial-gradient(circle,#ffffffaa,transparent 60%);
+  top:10%;
+  left:60%;
+  filter:blur(40px);
 }
 
-/* Message card */
-.card{
+/* Start screen */
+.start{
+  position:absolute;
   text-align:center;
-  background:rgba(255,255,255,0.18);
-  padding:40px;
-  border-radius:25px;
-  backdrop-filter:blur(15px);
-  box-shadow:0 0 40px #ff99cc66;
   z-index:2;
-  animation:fadeIn 2s ease;
-}
-
-@keyframes fadeIn{
-  from{opacity:0; transform:translateY(20px);}
-  to{opacity:1; transform:translateY(0);}
 }
 
 button{
-  margin-top:20px;
-  padding:15px 35px;
+  padding:18px 45px;
+  font-size:22px;
   border:none;
-  border-radius:12px;
-  background:#ff6fa5;
+  border-radius:50px;
+  background:rgba(255,255,255,0.2);
+  backdrop-filter:blur(10px);
   color:white;
-  font-size:20px;
   cursor:pointer;
-  box-shadow:0 0 25px #ff6fa5;
-  user-select:none;
+  box-shadow:0 0 20px #fff5;
   transition:.3s;
 }
-button:hover{transform:scale(1.1);}
+button:hover{transform:scale(1.1)}
 
+/* Message */
 .message{
-  margin-top:20px;
-  font-size:24px;
+  position:absolute;
+  text-align:center;
   opacity:0;
   transition:opacity 2s ease;
+  font-size:28px;
+  text-shadow:0 0 20px #ffffffaa;
 }
 .show{opacity:1}
 
-/* Sakura petals */
+/* Petals */
 .petal{
   position:absolute;
   top:-20px;
-  color:#ff9ecb;
-  font-size:18px;
+  width:15px;
+  height:10px;
+  background:#ffb6c1;
+  border-radius:50% 50% 50% 50%;
+  opacity:.8;
   animation:fall linear forwards;
 }
+
 @keyframes fall{
   to{
-    transform:translateY(110vh) rotate(360deg);
+    transform:translateY(110vh) translateX(80px) rotate(360deg);
     opacity:0;
   }
-}
-
-/* Tree trunk */
-.tree{
-  position:absolute;
-  bottom:0;
-  width:40px;
-  height:220px;
-  background:#5c2b29;
-  left:50%;
-  transform:translateX(-50%);
-  border-radius:20px;
-}
-
-/* Tree blossoms */
-.tree::before{
-  content:"";
-  position:absolute;
-  bottom:140px;
-  left:-120px;
-  width:280px;
-  height:200px;
-  background:radial-gradient(circle,#ff9ecb,#ff6fa5);
-  border-radius:50%;
-  box-shadow:
-    -60px -40px 0 40px #ff9ecb,
-    60px -40px 0 40px #ff9ecb,
-    0px -90px 0 50px #ff9ecb;
 }
 </style>
 </head>
 <body>
 
-<div class="tree"></div>
+<div class="start" id="start">
+  <h2>Click to Begin 🌸</h2>
+  <button onclick="begin()">Click Me</button>
+</div>
 
-<div class="card">
-  <h2>Hey You 🌸</h2>
-  <p>Under this pink sky, I have something to say...</p>
-  <button onclick="start()">See My Heart</button>
-  <div class="message" id="msg">Happie Valentine's Day 💖 You make my world bloom 🌷</div>
+<div class="message" id="msg">
+  <p>Under this sky,</p>
+  <p>every moment with you feels like spring.</p>
+  <p style="font-size:36px;">Happy Valentine's Day 💖</p>
 </div>
 
 <script>
-function start(){
+function begin(){
+  document.getElementById("start").style.display="none";
   document.getElementById("msg").classList.add("show");
-  setInterval(createPetal,200);
+  setInterval(createPetal,150);
 }
 
 function createPetal(){
   let petal=document.createElement("div");
   petal.className="petal";
-  petal.innerHTML="🌸";
   petal.style.left=Math.random()*100+"vw";
   petal.style.animationDuration=(Math.random()*3+4)+"s";
   document.body.appendChild(petal);
