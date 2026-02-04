@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Valentine Surprise</title>
+<title>Ultimate Valentine Surprise</title>
 <style>
 body{
   margin:0;
@@ -12,9 +12,10 @@ body{
   align-items:center;
   font-family:Arial;
   overflow:hidden;
-  transition:background 1s ease;
+  transition:background 1.5s ease;
 }
 
+/* Button */
 button{
   padding:20px 40px;
   font-size:28px;
@@ -35,32 +36,63 @@ button{
   100%{transform:scale(1)}
 }
 
+/* Hearts */
 .heart{
   position:absolute;
   font-size:20px;
-  animation:float 3s linear forwards;
+  animation:float 4s linear forwards;
   pointer-events:none;
 }
 
 @keyframes float{
   0%{opacity:1; transform:translateY(0) scale(1)}
-  100%{opacity:0; transform:translateY(-300px) scale(2)}
+  100%{opacity:0; transform:translateY(-400px) scale(2)}
 }
 
+/* Sparkles */
+.sparkle{
+  position:absolute;
+  width:5px;
+  height:5px;
+  background:white;
+  border-radius:50%;
+  animation:twinkle 2s infinite alternate;
+}
+
+@keyframes twinkle{
+  from{opacity:0.2}
+  to{opacity:1}
+}
+
+/* Message */
 .message{
   position:absolute;
   text-align:center;
   color:white;
-  font-size:48px;
+  font-size:50px;
   opacity:0;
   transform:scale(0.5);
-  transition:all 1s ease;
+  transition:all 1.5s ease;
   z-index:2;
+  text-shadow:0 0 20px white;
 }
 
 .message.show{
   opacity:1;
   transform:scale(1);
+}
+
+/* Puppy */
+.puppy{
+  position:absolute;
+  bottom:20px;
+  width:200px;
+  opacity:0;
+  transition:opacity 2s ease;
+}
+
+.puppy.show{
+  opacity:1;
 }
 </style>
 </head>
@@ -69,15 +101,24 @@ button{
 <button onclick="startLove()">Click It ❤️</button>
 
 <div class="message" id="msg">
-  💖 Happie Valentine's Day 💖
+  💖 Happie Valentine's Day 💖<br>
+  You make my world beautiful 🌎✨
 </div>
+
+<img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d" class="puppy" id="dog">
+
+<!-- Romantic Song (hidden YouTube player) -->
+<iframe id="music" width="0" height="0"
+src="https://www.youtube.com/embed/2Vv-BfVoq4g?autoplay=1&loop=1&playlist=2Vv-BfVoq4g"
+frameborder="0" allow="autoplay"></iframe>
 
 <script>
 function startLove(){
   document.querySelector("button").style.display="none";
   document.body.style.background="linear-gradient(135deg, #ff4e8d, #ff99cc)";
 
-  for(let i=0;i<40;i++){
+  // Hearts
+  for(let i=0;i<50;i++){
     let heart=document.createElement("div");
     heart.className="heart";
     heart.innerHTML="❤️";
@@ -88,8 +129,18 @@ function startLove(){
     document.body.appendChild(heart);
   }
 
+  // Sparkles
+  for(let i=0;i<80;i++){
+    let s=document.createElement("div");
+    s.className="sparkle";
+    s.style.left=Math.random()*100+"vw";
+    s.style.top=Math.random()*100+"vh";
+    document.body.appendChild(s);
+  }
+
   setTimeout(()=>{
     document.getElementById("msg").classList.add("show");
+    document.getElementById("dog").classList.add("show");
   },2000);
 }
 </script>
