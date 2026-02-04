@@ -15,7 +15,6 @@ body{
   transition:background 1s ease;
 }
 
-/* Button style */
 button{
   padding:20px 40px;
   font-size:28px;
@@ -26,6 +25,8 @@ button{
   cursor:pointer;
   box-shadow:0 0 25px red;
   animation:pulse 1.2s infinite;
+  z-index:2;
+  position:relative;
 }
 
 @keyframes pulse{
@@ -34,11 +35,11 @@ button{
   100%{transform:scale(1)}
 }
 
-/* Hearts */
 .heart{
   position:absolute;
   font-size:20px;
   animation:float 3s linear forwards;
+  pointer-events:none;
 }
 
 @keyframes float{
@@ -46,7 +47,6 @@ button{
   100%{opacity:0; transform:translateY(-300px) scale(2)}
 }
 
-/* Final message */
 .message{
   position:absolute;
   text-align:center;
@@ -55,6 +55,7 @@ button{
   opacity:0;
   transform:scale(0.5);
   transition:all 1s ease;
+  z-index:2;
 }
 
 .message.show{
@@ -76,7 +77,6 @@ function startLove(){
   document.querySelector("button").style.display="none";
   document.body.style.background="linear-gradient(135deg, #ff4e8d, #ff99cc)";
 
-  // Heart burst
   for(let i=0;i<40;i++){
     let heart=document.createElement("div");
     heart.className="heart";
@@ -88,7 +88,6 @@ function startLove(){
     document.body.appendChild(heart);
   }
 
-  // Show message after delay
   setTimeout(()=>{
     document.getElementById("msg").classList.add("show");
   },2000);
