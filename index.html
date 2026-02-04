@@ -2,80 +2,45 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sakura Moment 🌸</title>
+<title>Sakura Surprise 🌸</title>
 
 <style>
+/* RESET */
+*{margin:0;padding:0;box-sizing:border-box;}
+
 body{
-  margin:0;
   height:100vh;
   overflow:hidden;
   font-family:'Segoe UI',sans-serif;
-
-  /* REAL SAKURA BACKGROUND */
-  background-image:url("https://images.unsplash.com/photo-1522383225653-ed111181a951?auto=format&fit=crop&w=2000&q=80");
-  background-size:cover;
-  background-position:center;
   display:flex;
   justify-content:center;
   align-items:center;
+
+  /* CINEMATIC SAKURA SKY */
+  background:radial-gradient(circle at 70% 20%, #ffffff55 0%, transparent 40%),
+             linear-gradient(#9ed8ff,#cfeeff 40%, #ffd6e8 100%);
 }
 
-/* Soft pink cinematic tint */
-body::before{
-  content:"";
-  position:absolute;
+/* PETALS CONTAINER */
+#petals{
+  position:fixed;
   width:100%;
   height:100%;
-  background:rgba(255,180,200,0.25);
-  backdrop-filter:blur(2px);
-  z-index:0;
-  pointer-events:none;
+  top:0;left:0;
+  pointer-events:none; /* NOTHING CAN BLOCK CLICKS */
+  z-index:1;
 }
 
-/* Glass Card */
-.card{
-  position:relative;
-  z-index:5;
-  text-align:center;
-  padding:60px 80px;
-  border-radius:30px;
-  background:rgba(255,255,255,0.12);
-  backdrop-filter:blur(15px);
-  box-shadow:0 20px 50px rgba(0,0,0,0.3);
-  color:white;
-}
-
-button{
-  margin-top:25px;
-  padding:18px 45px;
-  font-size:22px;
-  border:none;
-  border-radius:40px;
-  cursor:pointer;
-  background:linear-gradient(45deg,#ff6ea5,#ff2e7a);
-  color:white;
-  box-shadow:0 0 25px #ff80b5;
-  transition:0.3s;
-  position:relative;
-  z-index:6;
-}
-
-button:hover{
-  transform:scale(1.1);
-}
-
-/* REAL PETAL SHAPE */
+/* PETAL SHAPE */
 .petal{
   position:absolute;
-  width:20px;
-  height:20px;
-  background:radial-gradient(circle,#ffd6ec,#ff86b8);
+  width:14px;
+  height:14px;
+  background:radial-gradient(circle,#ff9ecb,#ff5fa2);
   border-radius:50% 50% 50% 0;
   transform:rotate(45deg);
-  opacity:0.9;
+  opacity:0.8;
   animation:fall linear infinite;
-  pointer-events:none; /* CRITICAL FIX */
-  z-index:1;
 }
 
 @keyframes fall{
@@ -83,7 +48,50 @@ button:hover{
   100%{transform:translateY(110vh) rotate(360deg);}
 }
 
-/* Reveal message */
+/* GLASS CARD */
+.card{
+  position:relative;
+  z-index:5;
+  padding:60px 90px;
+  border-radius:30px;
+  background:rgba(255,255,255,0.15);
+  backdrop-filter:blur(18px);
+  box-shadow:0 25px 60px rgba(0,0,0,0.25);
+  text-align:center;
+  color:white;
+  transition:1s ease;
+}
+
+h1{
+  font-size:42px;
+  margin-bottom:15px;
+  text-shadow:0 0 15px #ff94c9;
+}
+
+p{
+  font-size:18px;
+  margin-bottom:25px;
+  opacity:0.9;
+}
+
+/* BUTTON */
+button{
+  padding:18px 50px;
+  font-size:22px;
+  border:none;
+  border-radius:50px;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(45deg,#ff6ea5,#ff2e7a);
+  box-shadow:0 0 30px #ff80b5;
+  transition:0.3s;
+}
+
+button:hover{
+  transform:scale(1.1);
+}
+
+/* REVEAL MESSAGE */
 .reveal{
   position:absolute;
   text-align:center;
@@ -91,9 +99,9 @@ button:hover{
   font-size:48px;
   opacity:0;
   transform:translateY(40px);
-  transition:1s ease;
+  transition:1.2s ease;
   z-index:10;
-  text-shadow:0 0 15px #ff8ec6;
+  text-shadow:0 0 25px #ff8ec6;
 }
 
 .reveal.show{
@@ -105,28 +113,32 @@ button:hover{
 
 <body>
 
+<div id="petals"></div>
+
 <div class="card" id="card">
   <h1>Under the Sakura Sky 🌸</h1>
-  <p>Something magical is waiting...</p>
+  <p>Every moment with you feels like spring.</p>
   <button onclick="showLove()">Click Me</button>
 </div>
 
 <div class="reveal" id="loveMsg">
   💖 Happie Valentine's Day 💖<br>
-  <span style="font-size:26px;">You make my world bloom 🌸</span>
+  <span style="font-size:24px;">You make my world bloom 🌸</span>
 </div>
 
 <script>
-// Create falling petals
-for(let i=0;i<30;i++){
+// Create petals
+const container = document.getElementById("petals");
+for(let i=0;i<40;i++){
   let p=document.createElement("div");
   p.className="petal";
   p.style.left=Math.random()*100+"vw";
   p.style.animationDuration=(Math.random()*8+6)+"s";
   p.style.animationDelay=(Math.random()*5)+"s";
-  document.body.appendChild(p);
+  container.appendChild(p);
 }
 
+// Button function
 function showLove(){
   document.getElementById("card").style.opacity="0";
   document.getElementById("loveMsg").classList.add("show");
