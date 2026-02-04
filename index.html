@@ -1,215 +1,135 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>My Love Universe</title>
+<title>For Someone Special</title>
 <style>
 body{
   margin:0;
   height:100vh;
-  overflow:hidden;
-  font-family:Arial;
+  background:linear-gradient(120deg,#0f0c29,#302b63,#24243e);
   display:flex;
   justify-content:center;
   align-items:center;
-  background:radial-gradient(circle at center,#1a1a2e,#000);
+  font-family:'Segoe UI',sans-serif;
+  overflow:hidden;
   color:white;
 }
 
-/* Star canvas */
-canvas{
+/* Floating soft background glow */
+body::before{
+  content:"";
   position:absolute;
-  top:0;
-  left:0;
+  width:600px;
+  height:600px;
+  background:radial-gradient(circle,#ff4d6d55,transparent);
+  animation:float 8s ease-in-out infinite alternate;
+}
+@keyframes float{
+  from{transform:translate(-100px,-100px);}
+  to{transform:translate(100px,100px);}
+}
+
+/* Glass Card */
+.card{
+  width:420px;
+  padding:40px;
+  text-align:center;
+  backdrop-filter:blur(15px);
+  background:rgba(255,255,255,0.08);
+  border-radius:20px;
+  box-shadow:0 0 40px rgba(255,77,109,0.3);
+  transform:scale(0.9);
+  opacity:0;
+  transition:all 1.2s ease;
+}
+
+.card.show{
+  transform:scale(1);
+  opacity:1;
 }
 
 /* Button */
 button{
-  padding:22px 50px;
-  font-size:30px;
+  padding:18px 40px;
+  font-size:22px;
   border:none;
-  border-radius:15px;
-  background:#ff004f;
+  border-radius:12px;
+  background:#ff4d6d;
   color:white;
   cursor:pointer;
-  box-shadow:0 0 30px #ff004f;
-  animation:pulse 1.2s infinite;
-  z-index:2;
+  box-shadow:0 0 25px #ff4d6d;
+  transition:all .4s ease;
   user-select:none;
 }
-
-@keyframes pulse{
-  0%{transform:scale(1)}
-  50%{transform:scale(1.15)}
-  100%{transform:scale(1)}
+button:hover{
+  transform:scale(1.1);
+  box-shadow:0 0 40px #ff4d6d;
 }
 
-/* Message */
-.message{
-  position:absolute;
-  text-align:center;
-  font-size:46px;
+/* Message stages */
+.stage{
   opacity:0;
-  top:40%;
-  transition:opacity 2s ease;
-  text-shadow:0 0 20px #ff4d6d,0 0 40px #ff4d6d;
+  transform:translateY(20px);
+  transition:all 1s ease;
+}
+.stage.show{
+  opacity:1;
+  transform:translateY(0);
 }
 
-.show{opacity:1}
-
-/* Typewriter */
-.typewriter{
-  border-right:3px solid white;
-  white-space:nowrap;
-  overflow:hidden;
-  width:0;
-  animation:typing 4s steps(40,end) forwards, blink .7s infinite;
-}
-@keyframes typing{to{width:100%}}
-@keyframes blink{50%{border-color:transparent}}
-
-/* Floating hearts */
+/* Floating hearts background */
 .heart{
   position:absolute;
-  font-size:25px;
-  animation:rise 5s linear forwards;
+  font-size:18px;
+  animation:rise 6s linear forwards;
   pointer-events:none;
 }
 @keyframes rise{
-  0%{transform:translateY(0); opacity:1}
-  100%{transform:translateY(-600px); opacity:0}
+  0%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(-800px);opacity:0}
 }
 
-/* Puppy */
-.puppy{
-  position:absolute;
-  bottom:0;
-  width:220px;
-  opacity:0;
-  transition:opacity 2s ease;
-}
-.puppy.show{opacity:1}
-
-/* Sparkle trail */
-.spark{
-  position:absolute;
-  width:6px;
-  height:6px;
-  background:white;
-  border-radius:50%;
-  pointer-events:none;
-  animation:fade 0.6s forwards;
-}
-@keyframes fade{to{opacity:0; transform:scale(2)}}
-
-/* Shooting stars */
-.shooting-star{
-  position:absolute;
-  width:2px;
-  height:80px;
-  background:linear-gradient(white,transparent);
-  animation:shoot 2s linear forwards;
-}
-@keyframes shoot{
-  from{transform:translateX(0) translateY(0);}
-  to{transform:translateX(-400px) translateY(400px);}
+/* Final glow */
+.final{
+  text-shadow:0 0 15px #ff4d6d,0 0 30px #ff4d6d;
+  font-size:28px;
 }
 </style>
 </head>
 <body>
 
-<canvas id="stars"></canvas>
-
-<button onclick="startLove()">Enter My Universe ❤️</button>
-
-<div class="message" id="msg">
-  <div class="typewriter">
-    Happie Valentine's Day 💖 You are my universe ✨
-  </div>
+<div class="card" id="card">
+  <h2>Hey You ❤️</h2>
+  <p class="stage" id="s1">I made this just for you...</p>
+  <p class="stage" id="s2">Because you make ordinary days magical ✨</p>
+  <p class="stage final" id="s3">Happie Valentine's Day 💖</p>
+  <button onclick="start()">Open Your Surprise</button>
 </div>
 
-<img src="https://images.unsplash.com/photo-1518717758536-85ae29035b6d" class="puppy" id="dog">
-
-<audio id="music" src="music.mp3" preload="auto"></audio>
-
 <script>
-// ⭐ STAR BACKGROUND
-const canvas=document.getElementById("stars");
-const ctx=canvas.getContext("2d");
-canvas.width=window.innerWidth;
-canvas.height=window.innerHeight;
+window.onload=()=>document.getElementById("card").classList.add("show");
 
-let stars=[];
-for(let i=0;i<200;i++){
-  stars.push({x:Math.random()*canvas.width,
-              y:Math.random()*canvas.height,
-              r:Math.random()*2});
-}
-
-function drawStars(){
-  ctx.clearRect(0,0,canvas.width,canvas.height);
-  ctx.fillStyle="white";
-  stars.forEach(s=>{
-    ctx.beginPath();
-    ctx.arc(s.x,s.y,s.r,0,2*Math.PI);
-    ctx.fill();
-    s.y+=0.3;
-    if(s.y>canvas.height) s.y=0;
-  });
-  requestAnimationFrame(drawStars);
-}
-drawStars();
-
-// 💖 START EXPERIENCE
-function startLove(){
+function start(){
   document.querySelector("button").style.display="none";
-  document.body.style.background="radial-gradient(circle,#ff4d6d,#000)";
-  document.getElementById("music").play();
+  floatHearts();
 
-  for(let i=0;i<60;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerHTML="💖";
-    h.style.left=Math.random()*100+"vw";
-    h.style.bottom="0";
-    document.body.appendChild(h);
-  }
-
-  setTimeout(()=>{
-    document.getElementById("msg").classList.add("show");
-    document.getElementById("dog").classList.add("show");
-  },2000);
+  setTimeout(()=>document.getElementById("s1").classList.add("show"),800);
+  setTimeout(()=>document.getElementById("s2").classList.add("show"),2200);
+  setTimeout(()=>document.getElementById("s3").classList.add("show"),3800);
 }
 
-// ✨ Mouse sparkle trail
-document.addEventListener("mousemove", e=>{
-  let s=document.createElement("div");
-  s.className="spark";
-  s.style.left=e.pageX+"px";
-  s.style.top=e.pageY+"px";
-  document.body.appendChild(s);
-  setTimeout(()=>s.remove(),600);
-});
-
-// 🌠 Shooting stars
-setInterval(()=>{
-  let star=document.createElement("div");
-  star.className="shooting-star";
-  star.style.left=Math.random()*window.innerWidth+"px";
-  document.body.appendChild(star);
-  setTimeout(()=>star.remove(),2000);
-},3000);
-
-// 💥 Click anywhere heart burst
-document.addEventListener("click",()=>{
-  for(let i=0;i<20;i++){
+function floatHearts(){
+  setInterval(()=>{
     let h=document.createElement("div");
     h.className="heart";
     h.innerHTML="💖";
     h.style.left=Math.random()*100+"vw";
     h.style.bottom="0";
+    h.style.fontSize=(Math.random()*20+14)+"px";
     document.body.appendChild(h);
-  }
-});
+    setTimeout(()=>h.remove(),6000);
+  },300);
+}
 </script>
 
 </body>
