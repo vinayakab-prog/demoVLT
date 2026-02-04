@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
+<meta charset="UTF-8">
 <title>Under the Sakura Sky</title>
+
 <style>
 body{
   margin:0;
@@ -106,19 +108,26 @@ button:hover{transform:scale(1.1)}
 </div>
 
 <script>
-document.getElementById("btn").addEventListener("click",function(){
-  document.getElementById("start").style.display="none";
-  document.getElementById("msg").classList.add("show");
-  setInterval(createPetal,150);
-});
+window.onload = function() {
 
-function createPetal(){
-  let petal=document.createElement("div");
-  petal.className="petal";
-  petal.style.left=Math.random()*100+"vw";
-  petal.style.animationDuration=(Math.random()*3+4)+"s";
-  document.body.appendChild(petal);
-  setTimeout(()=>petal.remove(),7000);
+  console.log("JS Loaded ✅"); // debugging line
+
+  document.getElementById("btn").onclick = function() {
+    console.log("Button Clicked ✅");
+
+    document.getElementById("start").style.display = "none";
+    document.getElementById("msg").classList.add("show");
+
+    setInterval(function(){
+      let petal = document.createElement("div");
+      petal.className = "petal";
+      petal.style.left = Math.random()*100 + "vw";
+      petal.style.animationDuration = (Math.random()*3+4)+"s";
+      document.body.appendChild(petal);
+      setTimeout(()=>petal.remove(),7000);
+    },150);
+  }
+
 }
 </script>
 
