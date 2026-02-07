@@ -16,7 +16,11 @@ body{
   color:white;
 }
 
-/* BUTTON */
+/* INTRO */
+#intro{
+  position:relative;
+  z-index:10; /* ABOVE EVERYTHING */
+}
 #intro button{
   padding:18px 60px;
   font-size:22px;
@@ -28,57 +32,52 @@ body{
   box-shadow:0 0 30px #ff4da6;
 }
 
-/* ANIME SKY */
+/* SCENE */
 #scene{
-  position:absolute;
+  position:fixed;
   width:100%;
   height:100%;
   background:linear-gradient(#ff9966,#ff5e62,#2b5876);
   opacity:0;
   transition:2s ease;
+  pointer-events:none; /* CAN'T BLOCK BUTTON */
 }
 
 /* PETALS */
 .petal{
   position:absolute;
-  width:14px;
-  height:14px;
+  width:12px;height:12px;
   background:radial-gradient(circle,#ffd6e7,#ff5fa2);
   border-radius:50% 50% 50% 0;
   transform:rotate(45deg);
-  opacity:.8;
   animation:fall linear infinite;
 }
 @keyframes fall{
   0%{transform:translateY(-10vh) translateX(0) rotate(0deg);}
-  100%{transform:translateY(110vh) translateX(40px) rotate(360deg);}
+  100%{transform:translateY(110vh) translateX(50px) rotate(360deg);}
 }
 
 /* TEDDY */
 #teddy{
   position:absolute;
   bottom:40px;
-  width:120px;
-  height:120px;
+  width:120px;height:120px;
   background:#c79a6b;
   border-radius:50%;
   opacity:0;
   animation:float 4s ease-in-out infinite;
 }
-
-/* teddy ears */
-#teddy::before, #teddy::after{
+#teddy::before,#teddy::after{
   content:"";
   position:absolute;
-  width:50px;height:50px;
+  width:45px;height:45px;
   background:#c79a6b;
   border-radius:50%;
-  top:-25px;
+  top:-20px;
 }
-#teddy::before{left:-10px;}
-#teddy::after{right:-10px;}
+#teddy::before{left:-5px;}
+#teddy::after{right:-5px;}
 
-/* teddy eyes */
 .eye{
   position:absolute;
   width:10px;height:14px;
@@ -94,8 +93,6 @@ body{
   0%,90%,100%{transform:scaleY(1);}
   95%{transform:scaleY(0.1);}
 }
-
-/* floating motion */
 @keyframes float{
   0%,100%{transform:translateY(0);}
   50%{transform:translateY(-10px);}
@@ -104,7 +101,7 @@ body{
 /* MESSAGE */
 #message{
   position:absolute;
-  font-size:58px;
+  font-size:56px;
   text-shadow:0 0 20px rgba(255,255,255,.7);
   opacity:0;
   transition:3s ease;
@@ -114,7 +111,7 @@ body{
 <body>
 
 <div id="intro">
-  <button onclick="start()">Click Me</button>
+  <button id="startBtn">Click Me</button>
 </div>
 
 <div id="scene"></div>
@@ -127,6 +124,8 @@ body{
 <div id="message">Happie Valentine’s Day Appi 💖</div>
 
 <script>
+document.getElementById("startBtn").addEventListener("click", start);
+
 function start(){
   document.getElementById("intro").style.display="none";
   const scene=document.getElementById("scene");
@@ -142,11 +141,8 @@ function start(){
     scene.appendChild(p);
   }
 
-  // show teddy
-  setTimeout(()=>document.getElementById("teddy").style.opacity="1",1000);
-
-  // show message
-  setTimeout(()=>document.getElementById("message").style.opacity="1",2500);
+  setTimeout(()=>document.getElementById("teddy").style.opacity="1",800);
+  setTimeout(()=>document.getElementById("message").style.opacity="1",2000);
 }
 </script>
 
