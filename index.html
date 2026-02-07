@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For Appi 💖</title>
+<title>For Appi</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
   height:100vh;
   overflow:hidden;
-  background:radial-gradient(circle at center,#0b0f1a,#02050a 80%);
+  background:linear-gradient(180deg,#0b0f14,#030406);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -20,120 +20,99 @@ body{
   position:absolute;
   text-align:center;
   z-index:5;
+  animation:fade 2s ease;
 }
-#intro h1{font-size:44px;letter-spacing:2px;}
+#intro h1{font-size:42px;letter-spacing:2px;font-weight:300;}
 #intro button{
   margin-top:30px;
-  padding:18px 60px;
-  font-size:22px;
+  padding:16px 60px;
+  font-size:20px;
   border:none;
-  border-radius:50px;
+  border-radius:40px;
   cursor:pointer;
   color:white;
-  background:linear-gradient(45deg,#ff4e91,#ff0055);
-  box-shadow:0 0 30px #ff4e91;
+  background:rgba(255,255,255,0.1);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,0.2);
 }
 
-/* STARS */
-.star{
+/* TIMELINE */
+#line{
   position:absolute;
-  width:3px;height:3px;
-  background:white;
-  border-radius:50%;
-  animation:twinkle 3s infinite alternate;
-}
-@keyframes twinkle{
-  from{opacity:.2;}
-  to{opacity:1;}
+  width:0;
+  height:2px;
+  background:linear-gradient(90deg,#ff4da6,transparent);
+  top:50%;
+  left:10%;
+  transition:3s ease;
 }
 
-/* HEART CONSTELLATION */
-#heart{
+/* MEMORIES */
+.memories{
   position:absolute;
-  width:200px;height:200px;
-  opacity:0;
-  transition:2s ease;
-}
-
-/* PHOTOS */
-.photos{
   display:flex;
-  gap:40px;
-  margin-top:250px;
-  justify-content:center;
+  gap:120px;
+  top:40%;
   opacity:0;
   transition:2s ease;
 }
-.photos img{
-  width:200px;height:260px;
+.memories img{
+  width:240px;
+  height:300px;
   object-fit:cover;
-  border-radius:25px;
-  box-shadow:0 20px 60px rgba(0,0,0,.7);
-  transform:scale(.8);
+  border-radius:18px;
+  box-shadow:0 25px 60px rgba(0,0,0,.6);
+  filter:brightness(.8);
   transition:1s ease;
 }
+.memories img:hover{filter:brightness(1);}
 
-/* MESSAGE */
+/* FINAL MESSAGE */
 #message{
-  margin-top:40px;
-  font-size:60px;
-  text-shadow:0 0 20px #ff4da6,0 0 50px #ff4da6;
-  min-height:100px;
-  text-align:center;
+  position:absolute;
+  bottom:12%;
+  font-size:58px;
+  font-weight:300;
+  letter-spacing:2px;
+  opacity:0;
+  transition:2s ease;
 }
+
+@keyframes fade{from{opacity:0;}to{opacity:1;}}
 </style>
 </head>
 <body>
 
 <div id="intro">
-  <h1>Click to Watch the Sky ✨</h1>
-  <button onclick="start()">Begin</button>
+  <h1>Some moments change everything.</h1>
+  <button onclick="start()">See Our Story</button>
 </div>
 
-<svg id="heart" viewBox="0 0 200 200">
-  <path d="M100 170 C40 120, 20 60, 60 40 C80 30, 100 50, 100 50 C100 50,120 30,140 40 C180 60,160 120,100 170" 
-        stroke="#ff4da6" stroke-width="2" fill="none"/>
-</svg>
+<div id="line"></div>
 
-<div class="photos">
-  <img src="https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg">
-  <img src="https://images.pexels.com/photos/167682/pexels-photo-167682.jpeg">
-  <img src="https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg">
+<div class="memories">
+  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=80">
+  <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=500&q=80">
+  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80">
 </div>
 
-<div id="message"></div>
+<div id="message">Happie Valentine’s Day Appi</div>
 
 <script>
-/* STARS */
-for(let i=0;i<100;i++){
-  let s=document.createElement("div");
-  s.className="star";
-  s.style.left=Math.random()*100+"vw";
-  s.style.top=Math.random()*100+"vh";
-  document.body.appendChild(s);
-}
-
 function start(){
-  document.getElementById("intro").style.display="none";
-  document.getElementById("heart").style.opacity="1";
+  document.getElementById("intro").style.opacity="0";
+  setTimeout(()=>document.getElementById("intro").style.display="none",800);
+
+  const line=document.getElementById("line");
+  line.style.width="80%";
 
   setTimeout(()=>{
-    document.querySelector(".photos").style.opacity="1";
-    document.querySelectorAll(".photos img").forEach((img,i)=>{
-      setTimeout(()=>img.style.transform="scale(1)",i*600);
-    });
-    setTimeout(typeText,2000);
+    document.querySelector(".memories").style.opacity="1";
   },2000);
-}
 
-const text="Happie Valentine’s Day Appi 💖";
-let i=0;
-function typeText(){
-  if(i<text.length){
-    document.getElementById("message").innerHTML+=text.charAt(i);
-    i++;
-    setTimeout(typeText,70);
-  }
+  setTimeout(()=>{
+    document.getElementById("message").style.opacity="1";
+  },3500);
 }
 </script>
 
