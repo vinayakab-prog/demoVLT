@@ -1,134 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>For Appi 💌</title>
-<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{
-  height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  background:linear-gradient(135deg,#ffe8d6,#ffd166);
-  overflow:hidden;
-}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>For Appi 💌</title>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@500;700&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+  
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-/* BUTTON */
-#btn{
-  position:absolute;
-  padding:14px 40px;
-  border:none;
-  border-radius:30px;
-  background:#ff5e78;
-  color:white;
-  font-size:18px;
-  cursor:pointer;
-  box-shadow:0 10px 25px rgba(0,0,0,.2);
-  z-index:10;
-}
+    body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #fff0f5, #ffe4e1, #ffb6c1);
+      font-family: 'Quicksand', sans-serif;
+      overflow: hidden;
+      position: relative;
+    }
 
-/* ENVELOPE CONTAINER */
-.envelope{
-  position:relative;
-  width:360px;
-  height:240px;
-  opacity:0;
-}
+    h1 {
+      margin-bottom: 2.5rem;
+      color: #c71585;
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.8rem;
+      text-shadow: 0 3px 10px rgba(199, 21, 133, 0.25);
+      z-index: 10;
+    }
 
-/* BACK */
-.back{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:#ff8f8f;
-  border-radius:6px;
-  box-shadow:0 25px 40px rgba(0,0,0,.25);
-  z-index:1;
-}
+    /* Envelope wrapper */
+    .envelope-wrapper {
+      position: relative;
+      width: 380px;
+      height: 280px;
+      opacity: 0;
+      transform: scale(0.95);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
 
-/* LETTER */
-.letter{
-  position:absolute;
-  width:88%;
-  height:190px;
-  background:white;
-  left:6%;
-  top:80px; /* hidden inside */
-  border-radius:6px;
-  padding:30px;
-  text-align:center;
-  transform:translateY(0);
-  transition:1.4s cubic-bezier(.77,0,.18,1);
-  box-shadow:0 15px 30px rgba(0,0,0,.25);
-  z-index:2;
-}
+    .envelope-wrapper.visible {
+      opacity: 1;
+      transform: scale(1);
+    }
 
-/* FRONT POCKET LIP */
-.front{
-  position:absolute;
-  width:100%;
-  height:140px;
-  bottom:0;
-  background:#ff7f7f;
-  border-radius:0 0 6px 6px;
-  z-index:3; /* hides lower letter */
-}
+    /* Button */
+    #open-btn {
+      padding: 16px 48px;
+      font-size: 1.3rem;
+      background: #ff4d6d;
+      color: white;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
+      transition: all 0.3s ease;
+      z-index: 20;
+    }
 
-/* FLAP */
-.flap{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:#ff6a6a;
-  clip-path:polygon(0 0,50% 60%,100% 0);
-  transform-origin:top;
-  transition:1s cubic-bezier(.77,0,.18,1);
-  z-index:4;
-  box-shadow:0 10px 20px rgba(0,0,0,.15);
-}
+    #open-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 30px rgba(255, 77, 109, 0.5);
+      background: #ff3366;
+    }
 
-/* TEXT */
-.message{
-  font-family:'Dancing Script',cursive;
-  font-size:36px;
-  color:#333;
-  opacity:0;
-  transition:1s ease;
-  margin-top:40px;
-}
-</style>
+    /* Envelope parts */
+    .envelope {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+    }
+
+    .envelope-back {
+      position: absolute;
+      width: 100%;
+      height: 78%;
+      background: #ff9999;
+      border-radius: 12px 12px 0 0;
+      bottom: 0;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    .letter {
+      position: absolute;
+      width: 86%;
+      height: 68%;
+      background: white;
+      left: 7%;
+      top: 18%;
+      border-radius: 10px;
+      padding: 2.2rem 1.8rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+      z-index: 3;
+      transition: all 1.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transform: translateY(0);
+      text-align: center;
+      opacity: 0;
+    }
+
+    .letter.revealed {
+      transform: translateY(-150px);
+      opacity: 1;
+      transition-delay: 0.4s;
+    }
+
+    .letter h2 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.8rem;
+      color: #db2777;
+      margin-bottom: 1rem;
+    }
+
+    .letter p {
+      font-size: 1.15rem;
+      color: #4b5563;
+      line-height: 1.6;
+    }
+
+    .front {
+      position: absolute;
+      width: 100%;
+      height: 55%;
+      bottom: 0;
+      background: #ff8080;
+      border-radius: 0 0 12px 12px;
+      z-index: 4;
+      transition: all 1.2s ease;
+    }
+
+    .flap {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background: #ff6666;
+      border-radius: 12px 12px 0 0;
+      clip-path: polygon(0 0, 50% 65%, 100% 0);
+      transform-origin: top;
+      transition: transform 1.3s cubic-bezier(0.6, 0.04, 0.18, 0.99);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      z-index: 5;
+    }
+
+    .flap.open {
+      transform: rotateX(-165deg);
+    }
+
+    /* Floating hearts */
+    .heart {
+      position: absolute;
+      font-size: 1.8rem;
+      color: #ff4d6d;
+      pointer-events: none;
+      animation: float 6s infinite ease-in-out;
+      opacity: 0;
+    }
+
+    .heart:nth-child(1) { left: 15%; animation-delay: 0.5s; }
+    .heart:nth-child(2) { left: 38%; animation-delay: 1.8s; }
+    .heart:nth-child(3) { left: 62%; animation-delay: 2.6s; }
+    .heart:nth-child(4) { left: 85%; animation-delay: 0.9s; }
+
+    @keyframes float {
+      0%   { transform: translateY(120vh) scale(0.4); opacity: 0; }
+      10%  { opacity: 0.9; }
+      90%  { opacity: 0.9; }
+      100% { transform: translateY(-20vh) scale(0.8); opacity: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .envelope-wrapper { width: 320px; height: 240px; }
+      .letter h2 { font-size: 2.4rem; }
+      h1 { font-size: 3rem; }
+    }
+  </style>
 </head>
 <body>
 
-<button id="btn">Open Letter 💌</button>
+  <h1>Happie Valentine’s Day Appi 💖</h1>
 
-<div class="envelope" id="env">
-  <div class="back"></div>
-  <div class="letter" id="letter">
-    <div class="message" id="msg">Happie Valentine’s Day Appi 💖</div>
+  <button id="open-btn">Open Letter 💌</button>
+
+  <div class="envelope-wrapper" id="envelopeWrapper">
+    <div class="envelope">
+      <div class="envelope-back"></div>
+      <div class="letter" id="letter">
+        <h2>My Dear Appi 🌸</h2>
+        <p>You're the most beautiful reason my heart smiles every single day.<br><br>
+           Thank you for being you 💕<br>
+           Happie Valentine's Day, my favorite person in the whole world! ✨</p>
+      </div>
+      <div class="front"></div>
+      <div class="flap" id="flap"></div>
+    </div>
+
+    <!-- Floating hearts -->
+    <div class="heart">❤️</div>
+    <div class="heart">💗</div>
+    <div class="heart">💞</div>
+    <div class="heart">💖</div>
   </div>
-  <div class="front"></div>
-  <div class="flap" id="flap"></div>
-</div>
 
-<script>
-const btn=document.getElementById("btn");
-const env=document.getElementById("env");
-const flap=document.getElementById("flap");
-const letter=document.getElementById("letter");
-const msg=document.getElementById("msg");
+  <script>
+    const btn = document.getElementById('open-btn');
+    const wrapper = document.getElementById('envelopeWrapper');
+    const flap = document.getElementById('flap');
+    const letter = document.getElementById('letter');
 
-btn.onclick=function(){
-  btn.style.display="none";
-  env.style.opacity="1";
+    btn.addEventListener('click', () => {
+      btn.style.display = 'none';
+      wrapper.classList.add('visible');
 
-  setTimeout(()=>flap.style.transform="rotateX(-160deg)",400);
-  setTimeout(()=>letter.style.transform="translateY(-140px)",1100);
-  setTimeout(()=>msg.style.opacity="1",1900);
-};
-</script>
+      setTimeout(() => {
+        flap.classList.add('open');
+      }, 600);
+
+      setTimeout(() => {
+        letter.classList.add('revealed');
+      }, 1400);
+    });
+  </script>
 
 </body>
 </html>
