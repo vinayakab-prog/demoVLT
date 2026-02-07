@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <title>For Appi 💌</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
   height:100vh;
   display:flex;
@@ -27,27 +26,54 @@ body{
   font-size:18px;
   cursor:pointer;
   box-shadow:0 10px 25px rgba(0,0,0,.2);
-  z-index:5;
+  z-index:10;
 }
 
-/* ENVELOPE */
+/* ENVELOPE CONTAINER */
 .envelope{
   position:relative;
   width:360px;
-  height:230px;
+  height:240px;
   opacity:0;
 }
 
-/* POCKET (this hides the letter) */
-.pocket{
+/* BACK */
+.back{
   position:absolute;
   width:100%;
   height:100%;
-  background:#ff7f7f;
+  background:#ff8f8f;
   border-radius:6px;
   box-shadow:0 25px 40px rgba(0,0,0,.25);
-  overflow:hidden; /* KEY: hides the letter inside */
+  z-index:1;
+}
+
+/* LETTER */
+.letter{
+  position:absolute;
+  width:88%;
+  height:190px;
+  background:white;
+  left:6%;
+  top:80px; /* hidden inside */
+  border-radius:6px;
+  padding:30px;
+  text-align:center;
+  transform:translateY(0);
+  transition:1.4s cubic-bezier(.77,0,.18,1);
+  box-shadow:0 15px 30px rgba(0,0,0,.25);
   z-index:2;
+}
+
+/* FRONT POCKET LIP */
+.front{
+  position:absolute;
+  width:100%;
+  height:140px;
+  bottom:0;
+  background:#ff7f7f;
+  border-radius:0 0 6px 6px;
+  z-index:3; /* hides lower letter */
 }
 
 /* FLAP */
@@ -59,25 +85,8 @@ body{
   clip-path:polygon(0 0,50% 60%,100% 0);
   transform-origin:top;
   transition:1s cubic-bezier(.77,0,.18,1);
-  z-index:3;
+  z-index:4;
   box-shadow:0 10px 20px rgba(0,0,0,.15);
-}
-
-/* LETTER */
-.letter{
-  position:absolute;
-  width:90%;
-  height:180px;
-  background:white;
-  left:5%;
-  top:60px; /* START INSIDE */
-  border-radius:6px;
-  padding:30px;
-  text-align:center;
-  transform:translateY(0);
-  transition:1.4s cubic-bezier(.77,0,.18,1);
-  box-shadow:0 15px 30px rgba(0,0,0,.25);
-  z-index:1;
 }
 
 /* TEXT */
@@ -96,10 +105,11 @@ body{
 <button id="btn">Open Letter 💌</button>
 
 <div class="envelope" id="env">
-  <div class="pocket"></div>
+  <div class="back"></div>
   <div class="letter" id="letter">
     <div class="message" id="msg">Happie Valentine’s Day Appi 💖</div>
   </div>
+  <div class="front"></div>
   <div class="flap" id="flap"></div>
 </div>
 
@@ -114,13 +124,8 @@ btn.onclick=function(){
   btn.style.display="none";
   env.style.opacity="1";
 
-  // flap opens
-  setTimeout(()=>flap.style.transform="rotateX(-160deg)",300);
-
-  // letter slides OUT of pocket
+  setTimeout(()=>flap.style.transform="rotateX(-160deg)",400);
   setTimeout(()=>letter.style.transform="translateY(-140px)",1100);
-
-  // message appears
   setTimeout(()=>msg.style.opacity="1",1900);
 };
 </script>
