@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>For Appi 💖</title>
+
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
 
 <style>
@@ -13,46 +14,90 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#ffe4e6,#ffd1dc);
+  background:linear-gradient(135deg,#ffe4e6,#ffd6e0);
   font-family:'Quicksand',sans-serif;
-  overflow:hidden;
 }
 
 /* Button */
-#openBtn{
+#btn{
   padding:18px 55px;
+  font-size:1.3rem;
   border:none;
   border-radius:50px;
   background:linear-gradient(45deg,#ff4d6d,#ff758f);
   color:white;
-  font-size:1.4rem;
   cursor:pointer;
-  box-shadow:0 12px 35px rgba(0,0,0,.25);
+  box-shadow:0 15px 35px rgba(0,0,0,.25);
 }
 
-/* Envelope container */
-.container{
+/* Envelope Container */
+.env{
   position:relative;
   width:420px;
   height:320px;
-  opacity:0;
-  transform:scale(.9);
-  transition:.8s;
+  display:none;
 }
 
-.container.show{
-  opacity:1;
-  transform:scale(1);
-}
-
-/* Back */
+/* Envelope Back */
 .back{
   position:absolute;
   width:100%;
   height:100%;
   background:#ff9aa2;
-  border-radius:18px;
+  border-radius:20px;
   box-shadow:0 25px 60px rgba(0,0,0,.25);
+}
+
+/* Letter */
+.letter{
+  position:absolute;
+  width:85%;
+  left:7.5%;
+  height:62%;
+  top:230px; /* fully hidden */
+  background:#fffaf0;
+  border-radius:15px;
+  border:2px dashed #cbd5e1;
+  padding:25px;
+  text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
+  transition:1.8s cubic-bezier(.68,-0.55,.27,1.55);
+  z-index:2;
+}
+
+.letter.show{
+  top:40px;
+}
+
+.letter h2{
+  font-family:'Dancing Script',cursive;
+  font-size:2.6rem;
+  color:#e11d48;
+  margin:0 0 10px;
+}
+
+.letter p{
+  font-size:1.1rem;
+  color:#374151;
+}
+
+/* Pocket Front */
+.front{
+  position:absolute;
+  bottom:0;
+  width:100%;
+  height:200px;
+  background:#ff7b7b;
+  z-index:4;
+  clip-path: polygon(
+    0% 40%,
+    20% 55%,
+    50% 70%,
+    80% 55%,
+    100% 40%,
+    100% 100%,
+    0% 100%
+  );
 }
 
 /* Flap */
@@ -63,70 +108,14 @@ body{
   background:#ff6f6f;
   clip-path:polygon(0 0,50% 70%,100% 0);
   transform-origin:top;
-  transition:1.3s;
+  transition:1.2s ease;
   z-index:5;
 }
 .flap.open{
   transform:rotateX(-170deg);
 }
 
-/* Curved pocket */
-.front{
-  position:absolute;
-  width:100%;
-  height:200px;
-  bottom:0;
-  background:#ff7b7b;
-  z-index:4;
-
-  clip-path: polygon(
-    0% 35%,
-    15% 50%,
-    30% 65%,
-    50% 75%,
-    70% 65%,
-    85% 50%,
-    100% 35%,
-    100% 100%,
-    0% 100%
-  );
-}
-
-/* Letter */
-.letter{
-  position:absolute;
-  width:84%;
-  left:8%;
-  height:64%;
-  top:240px; /* FULLY HIDDEN */
-  background:#fffaf0;
-  border-radius:16px;
-  padding:2rem;
-  text-align:center;
-  box-shadow:0 20px 50px rgba(0,0,0,.25);
-  border:2px dashed #d1d5db;
-  transform:translateY(0);
-  transition:2s cubic-bezier(.68,-0.55,.27,1.55);
-  z-index:2;
-}
-
-.letter.show{
-  transform:translateY(-220px);
-}
-
-.letter h2{
-  font-family:'Dancing Script',cursive;
-  font-size:2.7rem;
-  color:#e11d48;
-  margin-bottom:.7rem;
-}
-
-.letter p{
-  font-size:1.15rem;
-  color:#374151;
-}
-
-/* Floating hearts */
+/* Hearts */
 .heart{
   position:absolute;
   font-size:22px;
@@ -143,9 +132,9 @@ body{
 
 <body>
 
-<button id="openBtn">Open My Letter 💌</button>
+<button id="btn">Open My Letter 💌</button>
 
-<div class="container" id="env">
+<div class="env" id="env">
   <div class="back"></div>
   <div class="letter" id="letter">
     <h2>Happie Valentine’s Day Appi 💖</h2>
@@ -156,28 +145,28 @@ body{
 </div>
 
 <script>
-const btn=document.getElementById('openBtn');
-const env=document.getElementById('env');
-const flap=document.getElementById('flap');
-const letter=document.getElementById('letter');
+const btn=document.getElementById("btn");
+const env=document.getElementById("env");
+const flap=document.getElementById("flap");
+const letter=document.getElementById("letter");
 
 btn.onclick=()=>{
   btn.style.display="none";
-  env.classList.add('show');
+  env.style.display="block";
 
-  setTimeout(()=>flap.classList.add('open'),600);
-  setTimeout(()=>letter.classList.add('show'),1300);
+  setTimeout(()=>flap.classList.add("open"),500);
+  setTimeout(()=>letter.classList.add("show"),1200);
 
-  // Continuous hearts
+  // continuous hearts
   setInterval(()=>{
-    const heart=document.createElement("div");
-    heart.className="heart";
-    heart.innerHTML="💖";
-    heart.style.left=(40+Math.random()*80)+"px";
-    heart.style.top="210px";
-    env.appendChild(heart);
-    setTimeout(()=>heart.remove(),4000);
-  },500);
+    const h=document.createElement("div");
+    h.className="heart";
+    h.innerHTML="💖";
+    h.style.left=(40+Math.random()*100)+"px";
+    h.style.top="210px";
+    env.appendChild(h);
+    setTimeout(()=>h.remove(),4000);
+  },600);
 };
 </script>
 
