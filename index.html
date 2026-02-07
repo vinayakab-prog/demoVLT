@@ -2,148 +2,118 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For Appi 💖</title>
+<title>For Appi 💌</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 
 body{
   height:100vh;
-  overflow:hidden;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#0a0f18;
-  color:white;
+  background:#f9e3dc;
+  overflow:hidden;
 }
 
-/* INTRO */
-#intro{
-  position:relative;
-  z-index:10; /* ABOVE EVERYTHING */
-}
-#intro button{
-  padding:18px 60px;
-  font-size:22px;
+/* BUTTON */
+#startBtn{
+  position:absolute;
+  padding:18px 50px;
+  font-size:20px;
   border:none;
   border-radius:40px;
-  cursor:pointer;
+  background:#ff5e78;
   color:white;
-  background:linear-gradient(45deg,#ff4da6,#ff0055);
-  box-shadow:0 0 30px #ff4da6;
+  cursor:pointer;
+  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  z-index:5;
 }
 
-/* SCENE */
-#scene{
-  position:fixed;
+/* ENVELOPE */
+.envelope{
+  position:relative;
+  width:320px;
+  height:200px;
+  opacity:0;
+  transition:1s ease;
+}
+
+/* BODY */
+.body{
+  position:absolute;
   width:100%;
   height:100%;
-  background:linear-gradient(#ff9966,#ff5e62,#2b5876);
+  background:#ff7f7f;
+  border-radius:4px;
+}
+
+/* FLAP */
+.flap{
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:#ff6a6a;
+  clip-path:polygon(0 0, 50% 55%, 100% 0);
+  transform-origin:top;
+  transition:1s ease;
+  z-index:2;
+}
+
+/* LETTER */
+.letter{
+  position:absolute;
+  width:90%;
+  height:160px;
+  background:white;
+  left:5%;
+  top:20px;
+  border-radius:4px;
+  padding:20px;
+  text-align:center;
+  transform:translateY(100px);
+  transition:1.2s ease;
+  box-shadow:0 15px 30px rgba(0,0,0,.2);
+  z-index:1;
+}
+
+.message{
   opacity:0;
-  transition:2s ease;
-  pointer-events:none; /* CAN'T BLOCK BUTTON */
-}
-
-/* PETALS */
-.petal{
-  position:absolute;
-  width:12px;height:12px;
-  background:radial-gradient(circle,#ffd6e7,#ff5fa2);
-  border-radius:50% 50% 50% 0;
-  transform:rotate(45deg);
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  0%{transform:translateY(-10vh) translateX(0) rotate(0deg);}
-  100%{transform:translateY(110vh) translateX(50px) rotate(360deg);}
-}
-
-/* TEDDY */
-#teddy{
-  position:absolute;
-  bottom:40px;
-  width:120px;height:120px;
-  background:#c79a6b;
-  border-radius:50%;
-  opacity:0;
-  animation:float 4s ease-in-out infinite;
-}
-#teddy::before,#teddy::after{
-  content:"";
-  position:absolute;
-  width:45px;height:45px;
-  background:#c79a6b;
-  border-radius:50%;
-  top:-20px;
-}
-#teddy::before{left:-5px;}
-#teddy::after{right:-5px;}
-
-.eye{
-  position:absolute;
-  width:10px;height:14px;
-  background:#222;
-  border-radius:50%;
-  top:50px;
-  animation:blink 4s infinite;
-}
-.eye.left{left:35px;}
-.eye.right{right:35px;}
-
-@keyframes blink{
-  0%,90%,100%{transform:scaleY(1);}
-  95%{transform:scaleY(0.1);}
-}
-@keyframes float{
-  0%,100%{transform:translateY(0);}
-  50%{transform:translateY(-10px);}
-}
-
-/* MESSAGE */
-#message{
-  position:absolute;
-  font-size:56px;
-  text-shadow:0 0 20px rgba(255,255,255,.7);
-  opacity:0;
-  transition:3s ease;
+  font-size:22px;
+  margin-top:40px;
+  transition:1s ease;
 }
 </style>
 </head>
 <body>
 
-<div id="intro">
-  <button id="startBtn">Click Me</button>
+<button id="startBtn">Open Letter 💌</button>
+
+<div class="envelope" id="env">
+  <div class="flap" id="flap"></div>
+  <div class="body"></div>
+  <div class="letter" id="letter">
+    <div class="message" id="msg">Happie Valentine’s Day Appi 💖</div>
+  </div>
 </div>
-
-<div id="scene"></div>
-
-<div id="teddy">
-  <div class="eye left"></div>
-  <div class="eye right"></div>
-</div>
-
-<div id="message">Happie Valentine’s Day Appi 💖</div>
 
 <script>
-document.getElementById("startBtn").addEventListener("click", start);
+document.getElementById("startBtn").onclick = function(){
+  this.style.display="none";
+  const env=document.getElementById("env");
+  env.style.opacity="1";
 
-function start(){
-  document.getElementById("intro").style.display="none";
-  const scene=document.getElementById("scene");
-  scene.style.opacity="1";
+  setTimeout(()=>{
+    document.getElementById("flap").style.transform="rotateX(180deg)";
+  },500);
 
-  // petals
-  for(let i=0;i<30;i++){
-    let p=document.createElement("div");
-    p.className="petal";
-    p.style.left=Math.random()*100+"vw";
-    p.style.animationDuration=(Math.random()*6+5)+"s";
-    p.style.animationDelay=(Math.random()*3)+"s";
-    scene.appendChild(p);
-  }
+  setTimeout(()=>{
+    document.getElementById("letter").style.transform="translateY(-40px)";
+  },1200);
 
-  setTimeout(()=>document.getElementById("teddy").style.opacity="1",800);
-  setTimeout(()=>document.getElementById("message").style.opacity="1",2000);
-}
+  setTimeout(()=>{
+    document.getElementById("msg").style.opacity="1";
+  },2000);
+};
 </script>
 
 </body>
