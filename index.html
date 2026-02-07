@@ -34,6 +34,7 @@ body{
   width:420px;height:320px;
   opacity:0;
   transition:1s ease;
+  overflow:hidden;   /* 🔥 THIS FIXES THE LEAK */
 }
 .envelope.visible{opacity:1}
 
@@ -52,7 +53,7 @@ body{
   position:absolute;
   width:84%;left:8%;
   height:64%;
-  top:205px;  /* fully hidden at start */
+  top:210px;  /* safely hidden */
   background:#fffaf0;
   border-radius:16px;
   padding:2rem;
@@ -101,7 +102,9 @@ body{
   font-size:2.3rem;
   opacity:0;
   animation:floatUp 4.5s linear forwards;
+  z-index:10;  /* 🔥 above everything */
 }
+
 @keyframes floatUp{
   0%{opacity:0;transform:translateY(0) scale(.5)}
   20%{opacity:1}
@@ -139,6 +142,7 @@ btn.onclick=()=>{
   setTimeout(()=>flap.classList.add('open'),600);
   setTimeout(()=>letter.classList.add('visible'),1500);
 
+  // HEARTS FLOW
   setInterval(()=>{
     let heart=document.createElement("div");
     heart.className="heart";
