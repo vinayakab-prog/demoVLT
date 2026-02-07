@@ -19,119 +19,136 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      background: linear-gradient(135deg, #fff0f5, #ffe4e1, #ffb6c1);
+      background: linear-gradient(135deg, #fff5f7, #ffe4e9, #ffc1cc);
       font-family: 'Quicksand', sans-serif;
       overflow: hidden;
       position: relative;
     }
 
+    /* Background teddy */
+    .teddy-bg {
+      position: absolute;
+      bottom: -15%;
+      right: -10%;
+      font-size: 18rem;
+      opacity: 0.12;
+      transform: rotate(-12deg);
+      pointer-events: none;
+      animation: gentleFloat 18s infinite ease-in-out;
+      z-index: 0;
+    }
+
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0) rotate(-12deg); }
+      50% { transform: translateY(-40px) rotate(-14deg); }
+    }
+
     h1 {
-      margin-bottom: 2.5rem;
-      color: #c71585;
+      margin-bottom: 3rem;
+      color: #db2777;
       font-family: 'Dancing Script', cursive;
-      font-size: 3.8rem;
-      text-shadow: 0 3px 10px rgba(199, 21, 133, 0.25);
+      font-size: 4.2rem;
+      text-shadow: 0 4px 12px rgba(219, 39, 119, 0.3);
       z-index: 10;
     }
 
-    /* Envelope wrapper */
-    .envelope-wrapper {
+    /* Envelope container */
+    .envelope-container {
       position: relative;
-      width: 380px;
-      height: 280px;
+      width: 400px;
+      height: 300px;
       opacity: 0;
-      transform: scale(0.95);
-      transition: opacity 0.8s ease, transform 0.8s ease;
+      transform: scale(0.92);
+      transition: all 0.9s ease;
+      z-index: 5;
     }
 
-    .envelope-wrapper.visible {
+    .envelope-container.show {
       opacity: 1;
       transform: scale(1);
     }
 
     /* Button */
     #open-btn {
-      padding: 16px 48px;
-      font-size: 1.3rem;
-      background: #ff4d6d;
+      padding: 18px 56px;
+      font-size: 1.4rem;
+      background: linear-gradient(45deg, #ff4d6d, #ff3366);
       color: white;
       border: none;
       border-radius: 50px;
       cursor: pointer;
-      box-shadow: 0 8px 25px rgba(255, 77, 109, 0.4);
-      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255, 77, 109, 0.45);
+      transition: all 0.35s ease;
       z-index: 20;
     }
 
     #open-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 30px rgba(255, 77, 109, 0.5);
-      background: #ff3366;
+      transform: translateY(-4px) scale(1.05);
+      box-shadow: 0 16px 40px rgba(255, 77, 109, 0.55);
     }
 
-    /* Envelope parts */
+    /* Envelope */
     .envelope {
       position: absolute;
       width: 100%;
       height: 100%;
     }
 
-    .envelope-back {
+    .back {
       position: absolute;
       width: 100%;
-      height: 78%;
+      height: 75%;
       background: #ff9999;
-      border-radius: 12px 12px 0 0;
+      border-radius: 14px 14px 0 0;
       bottom: 0;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      box-shadow: 0 25px 45px rgba(0,0,0,0.22);
       z-index: 1;
     }
 
     .letter {
       position: absolute;
-      width: 86%;
-      height: 68%;
+      width: 84%;
+      height: 64%;
       background: white;
-      left: 7%;
-      top: 18%;
-      border-radius: 10px;
-      padding: 2.2rem 1.8rem;
-      box-shadow: 0 12px 30px rgba(0,0,0,0.18);
+      left: 8%;
+      top: 22%;
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      box-shadow: 0 14px 35px rgba(0,0,0,0.2);
       z-index: 3;
-      transition: all 1.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-      transform: translateY(0);
-      text-align: center;
+      transition: all 1.8s cubic-bezier(0.68, -0.4, 0.265, 1.4);
+      transform: translateY(0) scale(1);
       opacity: 0;
+      text-align: center;
     }
 
-    .letter.revealed {
-      transform: translateY(-150px);
+    .letter.show {
+      transform: translateY(-180px) scale(1.04);
       opacity: 1;
-      transition-delay: 0.4s;
     }
 
     .letter h2 {
       font-family: 'Dancing Script', cursive;
-      font-size: 2.8rem;
-      color: #db2777;
-      margin-bottom: 1rem;
+      font-size: 3.2rem;
+      color: #e11d48;
+      margin-bottom: 1.2rem;
     }
 
     .letter p {
-      font-size: 1.15rem;
+      font-size: 1.22rem;
       color: #4b5563;
-      line-height: 1.6;
+      line-height: 1.7;
     }
 
     .front {
       position: absolute;
       width: 100%;
-      height: 55%;
+      height: 52%;
       bottom: 0;
       background: #ff8080;
-      border-radius: 0 0 12px 12px;
+      border-radius: 0 0 14px 14px;
       z-index: 4;
-      transition: all 1.2s ease;
+      transition: transform 1.3s ease;
     }
 
     .flap {
@@ -139,90 +156,87 @@
       width: 100%;
       height: 100%;
       background: #ff6666;
-      border-radius: 12px 12px 0 0;
-      clip-path: polygon(0 0, 50% 65%, 100% 0);
+      border-radius: 14px 14px 0 0;
+      clip-path: polygon(0 0, 50% 68%, 100% 0);
       transform-origin: top;
-      transition: transform 1.3s cubic-bezier(0.6, 0.04, 0.18, 0.99);
-      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+      transition: transform 1.4s cubic-bezier(0.6, 0.02, 0.2, 0.99);
+      box-shadow: 0 18px 35px rgba(0,0,0,0.25);
       z-index: 5;
     }
 
     .flap.open {
-      transform: rotateX(-165deg);
+      transform: rotateX(-170deg);
     }
 
-    /* Floating hearts */
-    .heart {
+    /* Floating hearts that pop out */
+    .heart-pop {
       position: absolute;
-      font-size: 1.8rem;
+      font-size: 2.4rem;
       color: #ff4d6d;
       pointer-events: none;
-      animation: float 6s infinite ease-in-out;
       opacity: 0;
+      z-index: 6;
+      animation: popAndFloat 5s forwards;
     }
 
-    .heart:nth-child(1) { left: 15%; animation-delay: 0.5s; }
-    .heart:nth-child(2) { left: 38%; animation-delay: 1.8s; }
-    .heart:nth-child(3) { left: 62%; animation-delay: 2.6s; }
-    .heart:nth-child(4) { left: 85%; animation-delay: 0.9s; }
+    .heart-pop:nth-child(1) { left: 20%; top: 40%; animation-delay: 1.6s; }
+    .heart-pop:nth-child(2) { left: 35%; top: 55%; animation-delay: 1.9s; }
+    .heart-pop:nth-child(3) { left: 50%; top: 45%; animation-delay: 2.2s; }
+    .heart-pop:nth-child(4) { left: 65%; top: 60%; animation-delay: 2.5s; }
+    .heart-pop:nth-child(5) { left: 80%; top: 50%; animation-delay: 2.8s; }
 
-    @keyframes float {
-      0%   { transform: translateY(120vh) scale(0.4); opacity: 0; }
-      10%  { opacity: 0.9; }
-      90%  { opacity: 0.9; }
-      100% { transform: translateY(-20vh) scale(0.8); opacity: 0; }
-    }
-
-    @media (max-width: 480px) {
-      .envelope-wrapper { width: 320px; height: 240px; }
-      .letter h2 { font-size: 2.4rem; }
-      h1 { font-size: 3rem; }
+    @keyframes popAndFloat {
+      0%   { opacity: 0; transform: scale(0.1) translateY(0); }
+      30%  { opacity: 1; transform: scale(1.3) translateY(-20px); }
+      100% { opacity: 0; transform: scale(0.8) translateY(-180px); }
     }
   </style>
 </head>
 <body>
 
-  <h1>Happie Valentine’s Day Appi 💖</h1>
+  <div class="teddy-bg">🧸</div>
 
-  <button id="open-btn">Open Letter 💌</button>
+  <h1>Happie Valentine's Day Appi 💕</h1>
 
-  <div class="envelope-wrapper" id="envelopeWrapper">
+  <button id="open-btn">Open My Letter 💌</button>
+
+  <div class="envelope-container" id="envelopeContainer">
     <div class="envelope">
-      <div class="envelope-back"></div>
+      <div class="back"></div>
       <div class="letter" id="letter">
-        <h2>My Dear Appi 🌸</h2>
-        <p>You're the most beautiful reason my heart smiles every single day.<br><br>
-           Thank you for being you 💕<br>
-           Happie Valentine's Day, my favorite person in the whole world! ✨</p>
+        <h2>My Sweet Appi ♡</h2>
+        <p>You're the most beautiful reason<br>my heart smiles every single day.<br><br>
+           Happie Valentine's Day, my favorite person<br>in the whole world! 🌸✨</p>
       </div>
       <div class="front"></div>
       <div class="flap" id="flap"></div>
     </div>
 
-    <!-- Floating hearts -->
-    <div class="heart">❤️</div>
-    <div class="heart">💗</div>
-    <div class="heart">💞</div>
-    <div class="heart">💖</div>
+    <!-- Hearts that pop out from inside -->
+    <div class="heart-pop">💖</div>
+    <div class="heart-pop">❤️</div>
+    <div class="heart-pop">💗</div>
+    <div class="heart-pop">💞</div>
+    <div class="heart-pop">✨</div>
   </div>
 
   <script>
     const btn = document.getElementById('open-btn');
-    const wrapper = document.getElementById('envelopeWrapper');
+    const container = document.getElementById('envelopeContainer');
     const flap = document.getElementById('flap');
     const letter = document.getElementById('letter');
 
     btn.addEventListener('click', () => {
       btn.style.display = 'none';
-      wrapper.classList.add('visible');
+      container.classList.add('show');
 
       setTimeout(() => {
         flap.classList.add('open');
-      }, 600);
+      }, 700);
 
       setTimeout(() => {
-        letter.classList.add('revealed');
-      }, 1400);
+        letter.classList.add('show');
+      }, 1500);
     });
   </script>
 
