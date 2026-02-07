@@ -1,20 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
 <title>For Appi 💌</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
-
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-
 body{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#fff0f5,#ffd6e0,#ffc2d1);
+  background:radial-gradient(circle at top,#fff0f5,#ffd6e0,#ffc2d1);
   overflow:hidden;
   font-family:'Quicksand',sans-serif;
 }
@@ -23,109 +20,98 @@ body{
 #open-btn{
   position:absolute;
   padding:18px 60px;
-  font-size:1.4rem;
+  font-size:1.3rem;
   background:linear-gradient(45deg,#ff3366,#ff4d6d);
-  color:white;
-  border:none;
-  border-radius:50px;
-  cursor:pointer;
-  box-shadow:0 12px 35px rgba(255,51,102,.45);
+  color:white;border:none;border-radius:50px;
+  cursor:pointer;box-shadow:0 12px 35px rgba(255,51,102,.45);
   z-index:20;
 }
 
-/* CONTAINER */
+/* ENVELOPE CONTAINER */
 .envelope-container{
   position:relative;
-  width:420px;
-  height:320px;
-  opacity:0;
+  width:420px;height:320px;
+  opacity:0;transform:scale(.9);
   transition:1s ease;
 }
-.envelope-container.visible{opacity:1}
+.envelope-container.visible{opacity:1;transform:scale(1)}
 
-/* ENVELOPE PARTS */
+/* BACK */
 .back{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:#ff9aa2;
+  position:absolute;width:100%;height:100%;
+  background:linear-gradient(#ff9aa2,#ff7b7b);
   border-radius:18px;
-  box-shadow:0 25px 50px rgba(0,0,0,.25);
+  box-shadow:0 35px 60px rgba(0,0,0,.25);
   z-index:1;
 }
 
-/* LETTER INSIDE */
+/* LETTER */
 .letter{
-  position:absolute;
-  width:84%;
-  height:64%;
-  left:8%;
-  top:70px; /* hidden inside */
-  background:white;
+  position:absolute;width:84%;height:64%;
+  left:8%;top:80px;
+  background:#fffdf9;
   border-radius:16px;
-  padding:2.5rem;
-  text-align:center;
-  box-shadow:0 15px 40px rgba(0,0,0,.18);
+  padding:2.5rem;text-align:center;
+  box-shadow:0 20px 50px rgba(0,0,0,.25);
   transform:translateY(0);
-  transition:1.8s cubic-bezier(.77,0,.18,1);
+  transition:2s cubic-bezier(.68,-0.55,.27,1.55);
   z-index:2;
 }
+.letter.visible{transform:translateY(-210px)}
 
-.letter.visible{transform:translateY(-200px)}
-
-.letter h1{
-  font-family:'Dancing Script',cursive;
-  font-size:3rem;
-  color:#db2777;
-  margin-bottom:1rem;
+/* Letter shadow */
+.letter::before{
+  content:'';position:absolute;bottom:-12px;left:50%;
+  width:80%;height:18px;background:radial-gradient(ellipse,rgba(0,0,0,.25),transparent);
+  transform:translateX(-50%);
+  filter:blur(6px);
 }
-
-.letter p{font-size:1.2rem;color:#374151;line-height:1.7}
 
 /* FRONT POCKET LIP */
 .front{
-  position:absolute;
-  width:100%;
-  height:160px;
-  bottom:0;
-  background:#ff7b7b;
+  position:absolute;width:100%;height:160px;bottom:0;
+  background:linear-gradient(#ff8080,#ff6b6b);
   border-radius:0 0 18px 18px;
-  z-index:3; /* hides lower letter */
+  box-shadow:inset 0 10px 20px rgba(0,0,0,.2);
+  z-index:3;
 }
 
 /* FLAP */
 .flap{
-  position:absolute;
-  width:100%;
-  height:100%;
-  background:#ff6b6b;
+  position:absolute;width:100%;height:100%;
+  background:linear-gradient(#ff6b6b,#ff4d4d);
   clip-path:polygon(0 0,50% 65%,100% 0);
   border-radius:18px 18px 0 0;
   transform-origin:top;
-  transition:1.4s cubic-bezier(.77,0,.18,1);
-  box-shadow:0 20px 40px rgba(0,0,0,.25);
+  transition:1.6s cubic-bezier(.77,0,.18,1);
+  box-shadow:0 25px 50px rgba(0,0,0,.3);
   z-index:4;
 }
 .flap.open{transform:rotateX(-175deg)}
 
+/* TEXT */
+.letter h1{
+  font-family:'Dancing Script',cursive;
+  font-size:2.9rem;color:#db2777;margin-bottom:1rem;
+}
+.letter p{font-size:1.15rem;color:#374151;line-height:1.7}
+
 /* HEARTS */
 .heart{
-  position:absolute;
-  font-size:2.2rem;
-  opacity:0;
+  position:absolute;font-size:2.2rem;opacity:0;
+  animation:heartPop 6s forwards;
   z-index:5;
-  animation:heartPop 5s forwards;
 }
-.heart:nth-child(1){left:25%;top:60%;animation-delay:1.6s}
-.heart:nth-child(2){left:40%;top:65%;animation-delay:1.8s}
-.heart:nth-child(3){left:55%;top:60%;animation-delay:2s}
-.heart:nth-child(4){left:70%;top:65%;animation-delay:2.2s}
-.heart:nth-child(5){left:50%;top:70%;animation-delay:2.4s}
+.heart:nth-child(1){left:25%;top:60%;animation-delay:1.8s}
+.heart:nth-child(2){left:40%;top:65%;animation-delay:2s}
+.heart:nth-child(3){left:55%;top:60%;animation-delay:2.2s}
+.heart:nth-child(4){left:70%;top:65%;animation-delay:2.4s}
+.heart:nth-child(5){left:50%;top:70%;animation-delay:2.6s}
 
 @keyframes heartPop{
   0%{opacity:0;transform:scale(.3) translateY(0)}
-  30%{opacity:1;transform:scale(1.4) translateY(-40px)}
-  100%{opacity:0;transform:scale(.9) translateY(-280px)}
+  25%{opacity:1;transform:scale(1.5) translateY(-50px)}
+  100%{opacity:0;transform:scale(.9) translateY(-300px)}
 }
 </style>
 </head>
@@ -162,8 +148,8 @@ btn.onclick=()=>{
   btn.style.display='none';
   env.classList.add('visible');
 
-  setTimeout(()=>flap.classList.add('open'),600);
-  setTimeout(()=>letter.classList.add('visible'),1500);
+  setTimeout(()=>flap.classList.add('open'),700);
+  setTimeout(()=>letter.classList.add('visible'),1700);
 };
 </script>
 
