@@ -2,75 +2,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Sakura Sky</title>
+<title>Surprise 💖</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
 body{
   height:100vh;
   overflow:hidden;
-  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(-45deg,#8fd3f4,#cfd9df,#fbc2eb,#a6c1ee);
-  background-size:400% 400%;
-  animation:sky 15s ease infinite;
-}
-@keyframes sky{
-  0%{background-position:0% 50%;}
-  50%{background-position:100% 50%;}
-  100%{background-position:0% 50%;}
-}
-
-/* PETALS */
-#petals{position:fixed;width:100%;height:100%;top:0;left:0;pointer-events:none;}
-.petal{
-  position:absolute;
-  width:12px;height:12px;
-  background:radial-gradient(circle,#ffd1e6,#ff6ea5);
-  border-radius:50% 50% 50% 0;
-  transform:rotate(45deg);
-  opacity:0.7;
-  animation:fall linear infinite;
-}
-@keyframes fall{
-  0%{transform:translateY(-10vh) rotate(0deg);}
-  100%{transform:translateY(110vh) rotate(360deg);}
-}
-
-/* GLASS CARD */
-.card{
-  position:relative;
-  z-index:5;
-  padding:70px 110px;
-  border-radius:30px;
-  background:rgba(255,255,255,0.08);
-  backdrop-filter:blur(20px);
-  border:1px solid rgba(255,255,255,0.2);
-  box-shadow:0 25px 80px rgba(0,0,0,0.35);
-  text-align:center;
   color:white;
+}
+
+/* INTRO */
+#intro{
+  text-align:center;
   transition:1s ease;
 }
-
-h1{
-  font-size:44px;
+#intro h1{
+  font-size:42px;
   letter-spacing:2px;
-  margin-bottom:15px;
-  text-shadow:0 0 20px #ff9ecb;
+  opacity:.95;
 }
-
-p{
-  font-size:18px;
-  margin-bottom:30px;
-  opacity:0.85;
-}
-
-/* BUTTON */
-button{
+#intro button{
+  margin-top:30px;
   padding:18px 60px;
-  font-size:20px;
+  font-size:22px;
   border:none;
   border-radius:50px;
   cursor:pointer;
@@ -79,58 +38,127 @@ button{
   box-shadow:0 0 25px #ff6ea5;
   transition:.3s;
 }
-button:hover{
-  transform:scale(1.1);
-  box-shadow:0 0 40px #ff2e7a;
+#intro button:hover{transform:scale(1.1);}
+
+/* HEARTS */
+.heart{
+  position:absolute;
+  width:15px;height:15px;
+  background:#ff4d6d;
+  transform:rotate(45deg);
+  animation:float 4s linear infinite;
+}
+.heart::before,.heart::after{
+  content:"";
+  width:15px;height:15px;
+  background:#ff4d6d;
+  border-radius:50%;
+  position:absolute;
+}
+.heart::before{top:-7px;left:0;}
+.heart::after{left:-7px;top:0;}
+
+@keyframes float{
+  0%{transform:translateY(0) rotate(45deg);opacity:1;}
+  100%{transform:translateY(-900px) rotate(45deg);opacity:0;}
 }
 
-/* REVEAL */
-.reveal{
+/* SCENE */
+#scene{
   position:absolute;
   text-align:center;
-  color:white;
-  font-size:52px;
   opacity:0;
-  transform:translateY(50px);
-  transition:1.4s ease;
-  text-shadow:0 0 35px #ff7eb9;
+  transform:scale(0.8);
+  transition:1.5s ease;
 }
-.reveal.show{
-  opacity:1;
-  transform:translateY(0);
+
+/* PHOTOS */
+.photos{
+  display:flex;
+  gap:30px;
+  justify-content:center;
+  margin-bottom:40px;
+}
+.photos img{
+  width:170px;
+  height:220px;
+  object-fit:cover;
+  border-radius:20px;
+  box-shadow:0 15px 40px rgba(0,0,0,0.6);
+  opacity:0;
+  transform:translateY(60px);
+  transition:1s ease;
+}
+
+/* MESSAGE */
+#message{
+  font-size:52px;
+  letter-spacing:2px;
+  text-shadow:0 0 25px #ff4da6;
+  min-height:80px;
 }
 </style>
 </head>
 
 <body>
 
-<div id="petals"></div>
-
-<div class="card" id="card">
-  <h1>Under the Sakura Sky 🌸</h1>
-  <p>Some people make life feel like spring forever.</p>
-  <button onclick="showLove()">Open</button>
+<!-- INTRO -->
+<div id="intro">
+  <h1>Click for a Surprise 💖</h1>
+  <button onclick="startSurprise()">Click Here</button>
 </div>
 
-<div class="reveal" id="loveMsg">
-  💖 Happy Valentine's Day 💖<br>
-  <span style="font-size:26px;">You make my world bloom 🌸</span>
+<!-- SCENE -->
+<div id="scene">
+  <div class="photos">
+    <!-- Romantic aesthetic images -->
+    <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7">
+    <img src="https://images.unsplash.com/photo-1529336953121-ad5a0d43d0d2">
+    <img src="https://images.unsplash.com/photo-1516589178581-6cd7833ae3b2">
+  </div>
+  <div id="message"></div>
 </div>
 
 <script>
-const container=document.getElementById("petals");
-for(let i=0;i<50;i++){
-  let p=document.createElement("div");
-  p.className="petal";
-  p.style.left=Math.random()*100+"vw";
-  p.style.animationDuration=(Math.random()*10+8)+"s";
-  p.style.animationDelay=(Math.random()*5)+"s";
-  container.appendChild(p);
+function startSurprise(){
+  document.getElementById("intro").style.opacity="0";
+
+  // Hearts
+  for(let i=0;i<30;i++){
+    let h=document.createElement("div");
+    h.className="heart";
+    h.style.left=Math.random()*100+"vw";
+    h.style.top="100vh";
+    h.style.animationDuration=(Math.random()*3+2)+"s";
+    document.body.appendChild(h);
+  }
+
+  setTimeout(()=>{
+    const scene=document.getElementById("scene");
+    scene.style.opacity="1";
+    scene.style.transform="scale(1)";
+
+    const imgs=document.querySelectorAll(".photos img");
+    imgs.forEach((img,i)=>{
+      setTimeout(()=>{
+        img.style.opacity="1";
+        img.style.transform="translateY(0)";
+      }, i*700);
+    });
+
+    setTimeout(typeText,2200);
+  },1000);
 }
 
-function showLove(){
-  document.getElementById("card").style.opacity="0";
-  document.getElementById("loveMsg").classList.add("show");
+/* TYPEWRITER */
+const text="Happie Valentine’s Day Appi 💖";
+let i=0;
+function typeText(){
+  if(i<text.length){
+    document.getElementById("message").innerHTML+=text.charAt(i);
+    i++;
+    setTimeout(typeText,80);
+  }
 }
 </script>
 
