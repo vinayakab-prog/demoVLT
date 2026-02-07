@@ -16,11 +16,7 @@ body{
   color:white;
 }
 
-/* INTRO BUTTON */
-#intro{
-  text-align:center;
-  z-index:5;
-}
+/* BUTTON */
 #intro button{
   padding:18px 60px;
   font-size:22px;
@@ -30,11 +26,9 @@ body{
   color:white;
   background:linear-gradient(45deg,#ff4da6,#ff0055);
   box-shadow:0 0 30px #ff4da6;
-  transition:.3s;
 }
-#intro button:hover{transform:scale(1.1);}
 
-/* SKY SCENE */
+/* ANIME SKY */
 #scene{
   position:absolute;
   width:100%;
@@ -55,10 +49,56 @@ body{
   opacity:.8;
   animation:fall linear infinite;
 }
-
 @keyframes fall{
   0%{transform:translateY(-10vh) translateX(0) rotate(0deg);}
   100%{transform:translateY(110vh) translateX(40px) rotate(360deg);}
+}
+
+/* TEDDY */
+#teddy{
+  position:absolute;
+  bottom:40px;
+  width:120px;
+  height:120px;
+  background:#c79a6b;
+  border-radius:50%;
+  opacity:0;
+  animation:float 4s ease-in-out infinite;
+}
+
+/* teddy ears */
+#teddy::before, #teddy::after{
+  content:"";
+  position:absolute;
+  width:50px;height:50px;
+  background:#c79a6b;
+  border-radius:50%;
+  top:-25px;
+}
+#teddy::before{left:-10px;}
+#teddy::after{right:-10px;}
+
+/* teddy eyes */
+.eye{
+  position:absolute;
+  width:10px;height:14px;
+  background:#222;
+  border-radius:50%;
+  top:50px;
+  animation:blink 4s infinite;
+}
+.eye.left{left:35px;}
+.eye.right{right:35px;}
+
+@keyframes blink{
+  0%,90%,100%{transform:scaleY(1);}
+  95%{transform:scaleY(0.1);}
+}
+
+/* floating motion */
+@keyframes float{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(-10px);}
 }
 
 /* MESSAGE */
@@ -78,6 +118,12 @@ body{
 </div>
 
 <div id="scene"></div>
+
+<div id="teddy">
+  <div class="eye left"></div>
+  <div class="eye right"></div>
+</div>
+
 <div id="message">Happie Valentine’s Day Appi 💖</div>
 
 <script>
@@ -86,7 +132,7 @@ function start(){
   const scene=document.getElementById("scene");
   scene.style.opacity="1";
 
-  // create petals
+  // petals
   for(let i=0;i<30;i++){
     let p=document.createElement("div");
     p.className="petal";
@@ -96,9 +142,11 @@ function start(){
     scene.appendChild(p);
   }
 
-  setTimeout(()=>{
-    document.getElementById("message").style.opacity="1";
-  },2000);
+  // show teddy
+  setTimeout(()=>document.getElementById("teddy").style.opacity="1",1000);
+
+  // show message
+  setTimeout(()=>document.getElementById("message").style.opacity="1",2500);
 }
 </script>
 
