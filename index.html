@@ -11,31 +11,32 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:#f9e3dc;
+  background:linear-gradient(135deg,#fde2e2,#fad0c4);
+  perspective:1200px;
   overflow:hidden;
 }
 
 /* BUTTON */
-#startBtn{
+#openBtn{
   position:absolute;
-  padding:18px 50px;
-  font-size:20px;
+  padding:16px 45px;
+  font-size:18px;
   border:none;
-  border-radius:40px;
+  border-radius:30px;
   background:#ff5e78;
   color:white;
   cursor:pointer;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
-  z-index:5;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+  z-index:10;
 }
 
 /* ENVELOPE */
 .envelope{
   position:relative;
-  width:320px;
-  height:200px;
+  width:340px;
+  height:220px;
+  transform-style:preserve-3d;
   opacity:0;
-  transition:1s ease;
 }
 
 /* BODY */
@@ -44,7 +45,8 @@ body{
   width:100%;
   height:100%;
   background:#ff7f7f;
-  border-radius:4px;
+  border-radius:6px;
+  box-shadow:0 25px 40px rgba(0,0,0,.2);
 }
 
 /* FLAP */
@@ -55,30 +57,31 @@ body{
   background:#ff6a6a;
   clip-path:polygon(0 0, 50% 55%, 100% 0);
   transform-origin:top;
-  transition:1s ease;
-  z-index:2;
+  transition:1s cubic-bezier(.77,0,.18,1);
+  box-shadow:0 10px 20px rgba(0,0,0,.15);
+  z-index:3;
 }
 
 /* LETTER */
 .letter{
   position:absolute;
   width:90%;
-  height:160px;
+  height:170px;
   background:white;
   left:5%;
-  top:20px;
-  border-radius:4px;
-  padding:20px;
+  top:25px;
+  border-radius:6px;
+  padding:25px;
   text-align:center;
-  transform:translateY(100px);
-  transition:1.2s ease;
-  box-shadow:0 15px 30px rgba(0,0,0,.2);
+  transform:translateY(120px);
+  transition:1.3s cubic-bezier(.77,0,.18,1);
+  box-shadow:0 20px 35px rgba(0,0,0,.25);
   z-index:1;
 }
 
 .message{
   opacity:0;
-  font-size:22px;
+  font-size:24px;
   margin-top:40px;
   transition:1s ease;
 }
@@ -86,7 +89,7 @@ body{
 </head>
 <body>
 
-<button id="startBtn">Open Letter 💌</button>
+<button id="openBtn">Open Letter 💌</button>
 
 <div class="envelope" id="env">
   <div class="flap" id="flap"></div>
@@ -97,22 +100,19 @@ body{
 </div>
 
 <script>
-document.getElementById("startBtn").onclick = function(){
-  this.style.display="none";
-  const env=document.getElementById("env");
+const btn=document.getElementById("openBtn");
+const env=document.getElementById("env");
+const flap=document.getElementById("flap");
+const letter=document.getElementById("letter");
+const msg=document.getElementById("msg");
+
+btn.onclick=function(){
+  btn.style.display="none";
   env.style.opacity="1";
 
-  setTimeout(()=>{
-    document.getElementById("flap").style.transform="rotateX(180deg)";
-  },500);
-
-  setTimeout(()=>{
-    document.getElementById("letter").style.transform="translateY(-40px)";
-  },1200);
-
-  setTimeout(()=>{
-    document.getElementById("msg").style.opacity="1";
-  },2000);
+  setTimeout(()=>{ flap.style.transform="rotateX(-160deg)"; },400);
+  setTimeout(()=>{ letter.style.transform="translateY(-40px)"; },1100);
+  setTimeout(()=>{ msg.style.opacity="1"; },1800);
 };
 </script>
 
