@@ -3,23 +3,23 @@
 <head>
 <meta charset="UTF-8">
 <title>For Appi 💌</title>
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:sans-serif;}
 
 body{
   height:100vh;
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#fde2e2,#fad0c4);
-  perspective:1200px;
+  background:linear-gradient(135deg,#fceabb,#f8b500);
   overflow:hidden;
 }
 
 /* BUTTON */
-#openBtn{
+#btn{
   position:absolute;
-  padding:16px 45px;
+  padding:16px 40px;
   font-size:18px;
   border:none;
   border-radius:30px;
@@ -30,23 +30,42 @@ body{
   z-index:10;
 }
 
-/* ENVELOPE */
+/* ENVELOPE CONTAINER */
 .envelope{
   position:relative;
-  width:340px;
-  height:220px;
-  transform-style:preserve-3d;
+  width:360px;
+  height:240px;
+  perspective:1200px;
   opacity:0;
 }
 
-/* BODY */
-.body{
+/* BACK POCKET */
+.pocket{
   position:absolute;
   width:100%;
   height:100%;
   background:#ff7f7f;
   border-radius:6px;
-  box-shadow:0 25px 40px rgba(0,0,0,.2);
+  box-shadow:0 30px 40px rgba(0,0,0,.2);
+  overflow:hidden;
+  z-index:2;
+}
+
+/* LETTER (INSIDE) */
+.letter{
+  position:absolute;
+  width:92%;
+  height:200px;
+  background:white;
+  left:4%;
+  top:60px; /* hidden inside */
+  border-radius:6px;
+  padding:30px;
+  text-align:center;
+  transform:translateY(0);
+  transition:1.4s cubic-bezier(.77,0,.18,1);
+  box-shadow:0 15px 30px rgba(0,0,0,.2);
+  z-index:1;
 }
 
 /* FLAP */
@@ -55,52 +74,37 @@ body{
   width:100%;
   height:100%;
   background:#ff6a6a;
-  clip-path:polygon(0 0, 50% 55%, 100% 0);
+  clip-path:polygon(0 0, 50% 60%, 100% 0);
   transform-origin:top;
   transition:1s cubic-bezier(.77,0,.18,1);
-  box-shadow:0 10px 20px rgba(0,0,0,.15);
   z-index:3;
+  box-shadow:0 15px 25px rgba(0,0,0,.15);
 }
 
-/* LETTER */
-.letter{
-  position:absolute;
-  width:90%;
-  height:170px;
-  background:white;
-  left:5%;
-  top:25px;
-  border-radius:6px;
-  padding:25px;
-  text-align:center;
-  transform:translateY(120px);
-  transition:1.3s cubic-bezier(.77,0,.18,1);
-  box-shadow:0 20px 35px rgba(0,0,0,.25);
-  z-index:1;
-}
-
+/* MESSAGE */
 .message{
+  font-family:'Dancing Script',cursive;
+  font-size:34px;
   opacity:0;
-  font-size:24px;
-  margin-top:40px;
   transition:1s ease;
+  margin-top:40px;
 }
 </style>
 </head>
 <body>
 
-<button id="openBtn">Open Letter 💌</button>
+<button id="btn">Open Letter 💌</button>
 
 <div class="envelope" id="env">
-  <div class="flap" id="flap"></div>
-  <div class="body"></div>
+  <div class="pocket"></div>
   <div class="letter" id="letter">
     <div class="message" id="msg">Happie Valentine’s Day Appi 💖</div>
   </div>
+  <div class="flap" id="flap"></div>
 </div>
 
 <script>
-const btn=document.getElementById("openBtn");
+const btn=document.getElementById("btn");
 const env=document.getElementById("env");
 const flap=document.getElementById("flap");
 const letter=document.getElementById("letter");
@@ -110,9 +114,14 @@ btn.onclick=function(){
   btn.style.display="none";
   env.style.opacity="1";
 
-  setTimeout(()=>{ flap.style.transform="rotateX(-160deg)"; },400);
-  setTimeout(()=>{ letter.style.transform="translateY(-40px)"; },1100);
-  setTimeout(()=>{ msg.style.opacity="1"; },1800);
+  // flap opens
+  setTimeout(()=>flap.style.transform="rotateX(-160deg)",400);
+
+  // letter slides from inside pocket
+  setTimeout(()=>letter.style.transform="translateY(-120px)",1100);
+
+  // text fades in
+  setTimeout(()=>msg.style.opacity="1",1900);
 };
 </script>
 
