@@ -2,117 +2,103 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>For Appi</title>
+<title>For Appi 💖</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
+
 body{
   height:100vh;
   overflow:hidden;
-  background:linear-gradient(180deg,#0b0f14,#030406);
   display:flex;
   justify-content:center;
   align-items:center;
+  background:#0a0f18;
   color:white;
 }
 
-/* INTRO */
+/* INTRO BUTTON */
 #intro{
-  position:absolute;
   text-align:center;
   z-index:5;
-  animation:fade 2s ease;
 }
-#intro h1{font-size:42px;letter-spacing:2px;font-weight:300;}
 #intro button{
-  margin-top:30px;
-  padding:16px 60px;
-  font-size:20px;
+  padding:18px 60px;
+  font-size:22px;
   border:none;
   border-radius:40px;
   cursor:pointer;
   color:white;
-  background:rgba(255,255,255,0.1);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,0.2);
+  background:linear-gradient(45deg,#ff4da6,#ff0055);
+  box-shadow:0 0 30px #ff4da6;
+  transition:.3s;
 }
+#intro button:hover{transform:scale(1.1);}
 
-/* TIMELINE */
-#line{
+/* SKY SCENE */
+#scene{
   position:absolute;
-  width:0;
-  height:2px;
-  background:linear-gradient(90deg,#ff4da6,transparent);
-  top:50%;
-  left:10%;
-  transition:3s ease;
-}
-
-/* MEMORIES */
-.memories{
-  position:absolute;
-  display:flex;
-  gap:120px;
-  top:40%;
+  width:100%;
+  height:100%;
+  background:linear-gradient(#ff9966,#ff5e62,#2b5876);
   opacity:0;
   transition:2s ease;
 }
-.memories img{
-  width:240px;
-  height:300px;
-  object-fit:cover;
-  border-radius:18px;
-  box-shadow:0 25px 60px rgba(0,0,0,.6);
-  filter:brightness(.8);
-  transition:1s ease;
-}
-.memories img:hover{filter:brightness(1);}
 
-/* FINAL MESSAGE */
+/* PETALS */
+.petal{
+  position:absolute;
+  width:14px;
+  height:14px;
+  background:radial-gradient(circle,#ffd6e7,#ff5fa2);
+  border-radius:50% 50% 50% 0;
+  transform:rotate(45deg);
+  opacity:.8;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  0%{transform:translateY(-10vh) translateX(0) rotate(0deg);}
+  100%{transform:translateY(110vh) translateX(40px) rotate(360deg);}
+}
+
+/* MESSAGE */
 #message{
   position:absolute;
-  bottom:12%;
   font-size:58px;
-  font-weight:300;
-  letter-spacing:2px;
+  text-shadow:0 0 20px rgba(255,255,255,.7);
   opacity:0;
-  transition:2s ease;
+  transition:3s ease;
 }
-
-@keyframes fade{from{opacity:0;}to{opacity:1;}}
 </style>
 </head>
 <body>
 
 <div id="intro">
-  <h1>Some moments change everything.</h1>
-  <button onclick="start()">See Our Story</button>
+  <button onclick="start()">Click Me</button>
 </div>
 
-<div id="line"></div>
-
-<div class="memories">
-  <img src="https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=500&q=80">
-  <img src="https://images.unsplash.com/photo-1492724441997-5dc865305da7?auto=format&fit=crop&w=500&q=80">
-  <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=500&q=80">
-</div>
-
-<div id="message">Happie Valentine’s Day Appi</div>
+<div id="scene"></div>
+<div id="message">Happie Valentine’s Day Appi 💖</div>
 
 <script>
 function start(){
-  document.getElementById("intro").style.opacity="0";
-  setTimeout(()=>document.getElementById("intro").style.display="none",800);
+  document.getElementById("intro").style.display="none";
+  const scene=document.getElementById("scene");
+  scene.style.opacity="1";
 
-  const line=document.getElementById("line");
-  line.style.width="80%";
-
-  setTimeout(()=>{
-    document.querySelector(".memories").style.opacity="1";
-  },2000);
+  // create petals
+  for(let i=0;i<30;i++){
+    let p=document.createElement("div");
+    p.className="petal";
+    p.style.left=Math.random()*100+"vw";
+    p.style.animationDuration=(Math.random()*6+5)+"s";
+    p.style.animationDelay=(Math.random()*3)+"s";
+    scene.appendChild(p);
+  }
 
   setTimeout(()=>{
     document.getElementById("message").style.opacity="1";
-  },3500);
+  },2000);
 }
 </script>
 
