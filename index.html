@@ -8,7 +8,7 @@
 body{
   height:100vh;
   overflow:hidden;
-  background:radial-gradient(circle at center,#0f2027,#05080f 70%);
+  background:radial-gradient(circle at center,#0b0f1a,#02050a 80%);
   display:flex;
   justify-content:center;
   align-items:center;
@@ -19,8 +19,7 @@ body{
 #intro{
   position:absolute;
   text-align:center;
-  z-index:10;
-  animation:fadeIn 2s ease;
+  z-index:5;
 }
 #intro h1{font-size:44px;letter-spacing:2px;}
 #intro button{
@@ -32,40 +31,26 @@ body{
   cursor:pointer;
   color:white;
   background:linear-gradient(45deg,#ff4e91,#ff0055);
-  box-shadow:0 0 25px #ff6ea5;
-  transition:.3s;
+  box-shadow:0 0 30px #ff4e91;
 }
-#intro button:hover{transform:scale(1.1);}
 
-/* HEART PULSE */
-#pulse{
-  width:120px;height:120px;
+/* STARS */
+.star{
   position:absolute;
-  background:radial-gradient(circle,#ff4da6,#ff0055);
-  transform:rotate(45deg);
-  opacity:0;
-  animation:pulse 2s infinite;
-}
-#pulse::before,#pulse::after{
-  content:"";
-  position:absolute;
-  width:120px;height:120px;
-  background:inherit;
+  width:3px;height:3px;
+  background:white;
   border-radius:50%;
+  animation:twinkle 3s infinite alternate;
 }
-#pulse::before{top:-60px;}
-#pulse::after{left:-60px;}
-
-@keyframes pulse{
-  0%{transform:scale(1) rotate(45deg);opacity:.7;}
-  50%{transform:scale(1.3) rotate(45deg);opacity:1;}
-  100%{transform:scale(1) rotate(45deg);opacity:.7;}
+@keyframes twinkle{
+  from{opacity:.2;}
+  to{opacity:1;}
 }
 
-/* SCENE */
-#scene{
+/* HEART CONSTELLATION */
+#heart{
   position:absolute;
-  text-align:center;
+  width:200px;height:200px;
   opacity:0;
   transition:2s ease;
 }
@@ -73,92 +58,72 @@ body{
 /* PHOTOS */
 .photos{
   display:flex;
-  gap:50px;
+  gap:40px;
+  margin-top:250px;
   justify-content:center;
-  margin-bottom:60px;
+  opacity:0;
+  transition:2s ease;
 }
 .photos img{
-  width:200px;
-  height:260px;
+  width:200px;height:260px;
   object-fit:cover;
   border-radius:25px;
-  box-shadow:0 25px 60px rgba(0,0,0,.7);
-  opacity:0;
-  transform:scale(.6);
-  transition:1.5s ease;
+  box-shadow:0 20px 60px rgba(0,0,0,.7);
+  transform:scale(.8);
+  transition:1s ease;
 }
 
 /* MESSAGE */
 #message{
+  margin-top:40px;
   font-size:60px;
   text-shadow:0 0 20px #ff4da6,0 0 50px #ff4da6;
   min-height:100px;
+  text-align:center;
 }
-
-/* PARTICLES */
-.particle{
-  position:absolute;
-  width:6px;height:6px;
-  background:#ff4da6;
-  border-radius:50%;
-  animation:rise 6s linear infinite;
-}
-@keyframes rise{
-  0%{transform:translateY(0);opacity:1;}
-  100%{transform:translateY(-100vh);opacity:0;}
-}
-
-@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
 </style>
 </head>
 <body>
 
 <div id="intro">
-  <h1>Click for Something Magical ✨</h1>
-  <button onclick="start()">Open</button>
+  <h1>Click to Watch the Sky ✨</h1>
+  <button onclick="start()">Begin</button>
 </div>
 
-<div id="pulse"></div>
+<svg id="heart" viewBox="0 0 200 200">
+  <path d="M100 170 C40 120, 20 60, 60 40 C80 30, 100 50, 100 50 C100 50,120 30,140 40 C180 60,160 120,100 170" 
+        stroke="#ff4da6" stroke-width="2" fill="none"/>
+</svg>
 
-<div id="scene">
-  <div class="photos">
-    <img src="https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg">
-    <img src="https://images.pexels.com/photos/1024993/pexels-photo-1024993.jpeg">
-    <img src="https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg">
-  </div>
-  <div id="message"></div>
+<div class="photos">
+  <img src="https://images.pexels.com/photos/1028725/pexels-photo-1028725.jpeg">
+  <img src="https://images.pexels.com/photos/167682/pexels-photo-167682.jpeg">
+  <img src="https://images.pexels.com/photos/1262304/pexels-photo-1262304.jpeg">
 </div>
+
+<div id="message"></div>
 
 <script>
+/* STARS */
+for(let i=0;i<100;i++){
+  let s=document.createElement("div");
+  s.className="star";
+  s.style.left=Math.random()*100+"vw";
+  s.style.top=Math.random()*100+"vh";
+  document.body.appendChild(s);
+}
+
 function start(){
   document.getElementById("intro").style.display="none";
-  document.getElementById("pulse").style.opacity="1";
-
-  // particles
-  for(let i=0;i<40;i++){
-    let p=document.createElement("div");
-    p.className="particle";
-    p.style.left=Math.random()*100+"vw";
-    p.style.top=Math.random()*100+"vh";
-    p.style.animationDuration=(Math.random()*3+3)+"s";
-    document.body.appendChild(p);
-  }
+  document.getElementById("heart").style.opacity="1";
 
   setTimeout(()=>{
-    document.getElementById("pulse").style.display="none";
-    const scene=document.getElementById("scene");
-    scene.style.opacity="1";
-
-    const imgs=document.querySelectorAll(".photos img");
-    imgs.forEach((img,i)=>{
-      setTimeout(()=>{
-        img.style.opacity="1";
-        img.style.transform="scale(1)";
-      },i*700);
+    document.querySelector(".photos").style.opacity="1";
+    document.querySelectorAll(".photos img").forEach((img,i)=>{
+      setTimeout(()=>img.style.transform="scale(1)",i*600);
     });
-
-    setTimeout(typeText,2500);
-  },2500);
+    setTimeout(typeText,2000);
+  },2000);
 }
 
 const text="Happie Valentine’s Day Appi 💖";
