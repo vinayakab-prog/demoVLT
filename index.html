@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <title>For Appi 💌</title>
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;500&display=swap" rel="stylesheet">
+
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -13,6 +14,7 @@ body{
   align-items:center;
   background:linear-gradient(135deg,#fff0f5,#ffd6e0,#ffc2d1);
   font-family:'Quicksand',sans-serif;
+  overflow:hidden;
 }
 
 /* BUTTON */
@@ -43,24 +45,25 @@ body{
   background:#ff9aa2;
   border-radius:18px;
   box-shadow:0 30px 55px rgba(0,0,0,.25);
+  z-index:1;
 }
 
-/* INNER CLIP AREA (THE FIX) */
+/* CLIPPED INTERIOR */
 .inner{
   position:absolute;
-  width:100%;
-  height:100%;
-  overflow:hidden;   /* hides card inside */
+  width:100%;height:100%;
+  overflow:hidden;
   border-radius:18px;
+  z-index:2;
 }
 
 /* LETTER */
 .letter{
   position:absolute;
   width:84%;
-  height:64%;
   left:8%;
-  top:90px;
+  height:64%;
+  top:110px;
   background:white;
   border-radius:16px;
   padding:2.5rem;
@@ -69,18 +72,18 @@ body{
   transform:translateY(0);
   transition:2s cubic-bezier(.68,-0.55,.27,1.55);
 }
-.letter.visible{transform:translateY(-220px)}
+.letter.visible{transform:translateY(-230px)}
 
 .letter h1{
   font-family:'Dancing Script',cursive;
-  font-size:2.8rem;color:#db2777;margin-bottom:1rem;
+  font-size:2.6rem;color:#db2777;margin-bottom:1rem;
 }
 .letter p{font-size:1.15rem;color:#374151;line-height:1.7}
 
 /* FRONT POCKET */
 .front{
   position:absolute;
-  width:100%;height:160px;bottom:0;
+  width:100%;height:170px;bottom:0;
   background:#ff7b7b;
   border-radius:0 0 18px 18px;
   z-index:3;
@@ -97,8 +100,24 @@ body{
   z-index:4;
 }
 .flap.open{transform:rotateX(-175deg)}
+
+/* HEARTS */
+.heart{
+  position:absolute;
+  font-size:2.3rem;
+  opacity:0;
+  z-index:5;
+  animation:floatUp 4.5s ease forwards;
+}
+
+@keyframes floatUp{
+  0%{opacity:0;transform:translateY(0) scale(.5)}
+  20%{opacity:1}
+  100%{opacity:0;transform:translateY(-260px) scale(1.2)}
+}
 </style>
 </head>
+
 <body>
 
 <button id="open-btn">Open My Letter 💌</button>
@@ -130,6 +149,19 @@ btn.onclick=()=>{
 
   setTimeout(()=>flap.classList.add('open'),600);
   setTimeout(()=>letter.classList.add('visible'),1500);
+
+  // HEARTS SPAWN FROM INSIDE
+  setTimeout(()=>{
+    for(let i=0;i<8;i++){
+      let heart=document.createElement("div");
+      heart.className="heart";
+      heart.innerHTML=["💖","💗","💞","💕","❤️"][Math.floor(Math.random()*5)];
+      heart.style.left=40+Math.random()*120+"px";
+      heart.style.top="160px";
+      env.appendChild(heart);
+      setTimeout(()=>heart.remove(),4500);
+    }
+  },1700);
 };
 </script>
 
