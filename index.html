@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Valentine Envelope</title>
+<title>Sakura Valentine</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@500&display=swap" rel="stylesheet">
 
@@ -19,9 +19,26 @@ body{
   display:flex;
   justify-content:center;
   align-items:center;
-  background:linear-gradient(135deg,#ffe4ec,#ffd6e0);
   font-family:'Quicksand',sans-serif;
   overflow:hidden;
+  position:relative;
+
+  /* 🌸 YOUR SAKURA ROAD IMAGE */
+  background:url("https://w0.peakpx.com/wallpaper/286/132/HD-wallpaper-sakura-road-sakura-grass-clear-cherry-trees-sky-students-leaves-anime-car-road-pink-kids-blue.jpg") center/cover no-repeat;
+}
+
+/* Soft cinematic overlay */
+body::before{
+  content:"";
+  position:absolute;
+  width:100%;
+  height:100%;
+  background:linear-gradient(
+      rgba(255,182,193,0.25),
+      rgba(255,105,180,0.25)
+  );
+  backdrop-filter:blur(3px);
+  z-index:0;
 }
 
 /* BUTTON */
@@ -32,10 +49,10 @@ button{
   border:none;
   border-radius:35px;
   font-size:1.1rem;
-  background:#ff4d6d;
+  background:#ff4d8d;
   color:white;
   cursor:pointer;
-  box-shadow:0 10px 30px rgba(0,0,0,.2);
+  box-shadow:0 10px 30px rgba(255,105,180,.6);
   transition:.3s;
   z-index:20;
 }
@@ -51,6 +68,8 @@ button:hover{
   height:280px;
   overflow:hidden;
   perspective:1000px;
+  z-index:10;
+  filter:drop-shadow(0 0 40px rgba(255,105,180,.7));
 }
 
 /* BACK */
@@ -58,9 +77,8 @@ button:hover{
   position:absolute;
   width:100%;
   height:100%;
-  background:#ff8a8a;
+  background:#ff8fb1;
   border-radius:18px;
-  box-shadow:0 30px 70px rgba(0,0,0,.3);
   z-index:1;
 }
 
@@ -71,32 +89,38 @@ button:hover{
   height:200px;
   left:50%;
   transform:translateX(-50%);
-  top:280px; /* hidden */
-  background:#fffaf0;
+  top:280px;
+  background:#fff0f5;
   border-radius:15px;
-  border:2px dashed #cbd5e1;
+  border:2px dashed #ffc2d1;
   padding:25px;
   text-align:center;
-  box-shadow:0 25px 60px rgba(0,0,0,.25);
+  box-shadow:0 20px 60px rgba(0,0,0,.3);
   transition:1.2s cubic-bezier(.68,-0.55,.27,1.55);
   z-index:2;
 }
 
-/* 👇 Letter comes up higher now */
 .open .letter{
   top:35px;
+  animation:pop .6s ease forwards;
+}
+
+@keyframes pop{
+  0%{transform:translateX(-50%) scale(1);}
+  50%{transform:translateX(-50%) scale(1.08);}
+  100%{transform:translateX(-50%) scale(1);}
 }
 
 .letter h1{
   font-family:'Dancing Script',cursive;
-  color:#e11d48;
+  color:#e91e63;
   font-size:2.2rem;
 }
 
 .letter p{
-  margin-top:8px;
+  margin-top:10px;
   font-size:1.1rem;
-  color:#374151;
+  color:#333;
 }
 
 /* FRONT POCKET */
@@ -105,7 +129,7 @@ button:hover{
   bottom:0;
   width:100%;
   height:170px;
-  background:#ff7b7b;
+  background:#ff7aa8;
   z-index:4;
   clip-path:polygon(
     0 50%,20% 60%,40% 68%,50% 72%,60% 68%,80% 60%,100% 50%,100% 100%,0 100%
@@ -117,7 +141,7 @@ button:hover{
   position:absolute;
   width:100%;
   height:200px;
-  background:#ff6b6b;
+  background:#ff6b9a;
   clip-path:polygon(0 100%,50% 0,100% 100%);
   transform-origin:top;
   transition:1s ease;
@@ -129,10 +153,10 @@ button:hover{
   transform:rotateX(-180deg);
 }
 
-/* HEARTS */
+/* 💖 FLYING HEARTS */
 .heart{
   position:absolute;
-  font-size:24px;
+  font-size:28px;
   pointer-events:none;
   animation:float 3s ease-out forwards;
   z-index:50;
@@ -143,11 +167,9 @@ button:hover{
     transform:translateY(0) scale(.6);
     opacity:0;
   }
-  20%{
-    opacity:1;
-  }
+  20%{opacity:1;}
   100%{
-    transform:translateY(-300px) scale(1.3);
+    transform:translateY(-350px) scale(1.5);
     opacity:0;
   }
 }
@@ -178,8 +200,8 @@ btn.addEventListener('click', () => {
   btn.style.display = 'none';
   env.classList.add('open');
 
+  /* 💖 Hearts */
   let count = 0;
-
   const interval = setInterval(() => {
 
     const heart = document.createElement('div');
@@ -194,9 +216,9 @@ btn.addEventListener('click', () => {
     setTimeout(() => heart.remove(), 3000);
 
     count++;
-    if(count > 25) clearInterval(interval);
+    if(count > 30) clearInterval(interval);
 
-  }, 200);
+  }, 180);
 
 });
 </script>
